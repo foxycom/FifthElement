@@ -1,4 +1,7 @@
-public class Song{
+package main.java.fifthelement.theelement.objects;
+
+// TODO: implement proper stuff here
+public class Song extends MusicItem {
     private int songId;
     private String songName;
     private ArrayList<Author>authors;//might not include this 

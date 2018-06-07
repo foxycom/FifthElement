@@ -1,10 +1,13 @@
-public class Author{
+package main.java.fifthelement.theelement.objects;
 
-    private int id;
+public class Author extends MusicItem {
+// TODO: implement proper stuff here
+
+    private String id;
     private String name;
 
 
-    public Author(int id; String name){
+    public Author(String id, String name) {
 
         this.id = id;
         this.name = name;
@@ -14,7 +17,7 @@ public class Author{
         return name;
     }
 
-    public String getId(){
+    public String getID() {
         return id;
     }
 
@@ -22,7 +25,7 @@ public class Author{
         this.name = newName;
     }
 
-    public void setId(int newId){
+    public void setID(String newId) {
         this.id  = newId;
     }
 

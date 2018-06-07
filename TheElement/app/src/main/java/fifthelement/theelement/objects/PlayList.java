@@ -1,4 +1,7 @@
-public class PlayList{
+package main.java.fifthelement.theelement.objects;
+
+// TODO: implement proper stuff here
+public class PlayList extends MusicItem {
     private int listId;
     private String listName;
     private ArrayList<Song>songs;

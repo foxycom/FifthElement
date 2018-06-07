@@ -1,14 +1,21 @@
-public class Album{
-    private int albumId;
-    private String albumName;
-    private ArrayList<Author> authors;
-    private ArrayList<Song> songs;
 
-    public Album(int id, String name){
+package main.java.fifthelement.theelement.objects;
+
+import main.java.fifthelement.theelement.persistence.stubs.AuthorStorage;
+import main.java.fifthelement.theelement.persistence.stubs.SongStorage;
+// TODO: implement proper stuff here
+
+public class Album{
+    private String albumId;
+    private String albumName;
+    private AuthorStorage authors;
+    private SongStorage songs;
+
+    public Album(String id, String name) {
         this.albumId = id;
         this.albumName = name;
-        authors = new ArrayList<Author>();
-        songs = new ArrayList<Song>();
+        authors = new AuthorStorage();
+        songs = new SongStorage();
     }
 
     public String getName(){
@@ -19,32 +26,32 @@ public class Album{
         return albumId;
     }
 
-    public ArrayList<Author> getAuthors(){
+    public AuthorStorage getAuthors() {
         return authors;
     }
-    
-    public ArrayList<Song> getsongs(){
+
+    public SongStorage getsongs() {
         return songs;
     }
 
-    public void setName(String Newname){
+    public void setName(String newName) {
         this.albumName = newName;
     }
 
-    public void setId(int newId){
-        this.albumId  = neweId;
+    public void setId(String newId) {
+        this.albumId = newId;
     }
 
-    public void setAuthors(ArrayList<Author>authorList){
+    public void setAuthors(AuthorStorage authorList) {
         this.authors =  authorList;
     }
     //OR
 
     public void addAuthor(Song newAuthor){//to add a single author
-        this.authors.add(newAuthor);
+        this.authors.store(newAuthor);
     }
 
-    public void setSongs(ArrayList<Song>songList){
+    public void setSongs(SongStoragesongList) {
         this.songs = songList;
     }
     //OR
@@ -52,7 +59,6 @@ public class Album{
     public void addSong(Song newSong){
         this.songs.add(newSong);
     }
-
 
 
 }
