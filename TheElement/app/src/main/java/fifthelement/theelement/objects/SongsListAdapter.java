@@ -42,6 +42,7 @@ public class SongsListAdapter extends BaseAdapter {
         view = inflater.inflate(R.layout.fragment_song_list_item, null);
         TextView songName = (TextView) view.findViewById(R.id.song_name_list);
         TextView albumName = (TextView) view.findViewById(R.id.album_name_list);
+
         Song printSong = songs.get(i);
         ArrayList<Author> author = printSong.getAuthors();
         String albums = "";
@@ -51,6 +52,7 @@ public class SongsListAdapter extends BaseAdapter {
                 albums += ", ";
             }
         }
+
         songName.setText(printSong.getName());
         albumName.setText(albums);
         return view;

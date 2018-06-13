@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.song_list:
                 fragmentClass = SongListFragment.class;
                 break;
+            case R.id.search_view:
+                fragmentClass = SearchFragment.class;
+                break;
             default:
                 fragmentClass = HomeFragment.class;
                 break;

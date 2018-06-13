@@ -10,6 +10,10 @@
             android:icon="@drawable/ic_song_list"
             android:title="@string/song_list" />
         <item
+            android:id="@+id/search_view"
+            android:icon="@drawable/ic_search_black_24dp"
+            android:title="@string/search" />
+        <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/tools" />

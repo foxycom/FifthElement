@@ -2,12 +2,12 @@ package fifthelement.theelement.objects;
 
 import java.util.ArrayList;
 
-public class PlayList {
+public class Playlist {
     private int listId;
     private String listName;
     private ArrayList<Song> songs;
 
-    public PlayList(int id, String name) {
+    public Playlist(int id, String name) {
         this.listId = id;
         this.listName = name;
         this.songs = new ArrayList<Song>();
@@ -38,6 +38,7 @@ public class PlayList {
     }
     //OR
 
+    // Adding single songs
     public void addSong(Song newSong) {
         this.songs.add(newSong);
     }
