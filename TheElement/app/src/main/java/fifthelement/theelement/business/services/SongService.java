@@ -9,6 +9,9 @@ import java.util.regex.Pattern;
 
 import fifthelement.theelement.application.Persistence;
 import fifthelement.theelement.business.exceptions.SongAlreadyExistsException;
+import fifthelement.theelement.objects.Album;
+import fifthelement.theelement.objects.Author;
+import fifthelement.theelement.objects.PlayList;
 import fifthelement.theelement.objects.Song;
 import fifthelement.theelement.persistence.AlbumPersistence;
 import fifthelement.theelement.persistence.AuthorPersistence;
@@ -80,19 +83,49 @@ public class SongService {
 
         if( song != null ) {
 
-            // deletes songs from existing PlayList if it's there
-            // implementation for this hasn't been fully decided. this is a STUB
-            //for( PlayList p : playListPersistence.getAllPlayLists() ) {
-            //    if( p.contains(song) ) {
-            //        p.removeSong(song);
-            //        playListPersistence.updatePlayList(p);
-            //    }
+        // NOTE: since we haven't fully implemented relations with other objects in the persistence,
+        // this won't be implemented for now but will be needed for future use
+        //for( PlayList p : playListPersistence.getAllPlayLists() ) {
+            //if( p.contains(song) ) {
+                //p.removeSong(song);
+                //playListPersistence.updatePlayList(p);
             //}
+        //}
+        //if( song.getAlbum() != null ) {
+        //    Album a = albumPersistence.getAlbumByUUID(song.getAlbum().getUUID());
+        //    if( a != null ) {
+        //        //a.deleteSong(song);
+        //        //this.validateAlbum(a);
+        //    }
+        //}
+        //if( song.getAuthor() != null ) {
+        //    Author a = authorPersistence.getAuthorByUUID(song.getAuthor().getUUID());
+        //    if( a != null ) {
+        //        //a.deleteSong(song);
+        //        //this.validateAuthor(a);
+        //    }
+        //}
 
             songPersistence.deleteSong(song);
             return true;
         }
         return false;
+    }
+
+    private void validateAlbum(Album album) {
+        if( album != null && album.getSongList() != null ) {
+            if( album.getSongList().size() <= 0 ) {
+                albumPersistence.deleteAlbum(album);
+            }
+        }
+    }
+
+    private void validateAuthor(Author author) {
+        if( author != null && author.getSongList() != null ) {
+            if( author.getSongList().size() <= 0 ) {
+                authorPersistence.deleteAuthor(author);
+            }
+        }
     }
 
     // Method checks if any song already has the same path

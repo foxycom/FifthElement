@@ -31,8 +31,8 @@ public class AlbumService {
     public List<Album> getAlbums() {
         List<Album> albums = albumPersistence.getAllAlbums();
         for(Album album : albums) {
-            if(album.getSongs() == null) {
-                album.setSongs(songPersistence.getSongsByAlbumUUID(album.getUUID()));
+            if(album.getSongList() == null) {
+                album.setSongList(songPersistence.getSongsByAlbumUUID(album.getUUID()));
             }
         }
         return albumPersistence.getAllAlbums();

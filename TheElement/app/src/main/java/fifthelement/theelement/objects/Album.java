@@ -52,7 +52,7 @@ public class Album{
         return author;
     }
 
-    public List<Song> getSongs() {
+    public List<Song> getSongList() {
         return songList;
     }
 
@@ -67,7 +67,7 @@ public class Album{
         this.author =  author;
     }
 
-    public void setSongs(List<Song>songList) {
+    public void setSongList(List<Song>songList) {
         this.songList = songList;
     }
 
