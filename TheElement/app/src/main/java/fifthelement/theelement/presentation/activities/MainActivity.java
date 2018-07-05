@@ -253,8 +253,6 @@ public class MainActivity extends AppCompatActivity {
         builderSingle.setIcon(R.drawable.ic_song_list);
         builderSingle.setTitle(currentPlaylist.getName()+" songs:");
 
-        //final CompactSongsListAdapter compactSongsListAdapter = new CompactSongsListAdapter(this, currentPlaylist.getSongs());
-
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -267,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 musicService.playSongAsync(currentPlaylist.getSongs().get(which));
+                startNotificationService(findViewById(R.id.toolbar));
+
             }
         });
 

@@ -49,6 +49,7 @@ public class SongListFragment extends Fragment {
 
         autoPlaySwitch();
         shuffleSwitch();
+        refreshAdapter();
         playSong(listView);
     }
 
@@ -69,9 +70,10 @@ public class SongListFragment extends Fragment {
                 musicService.shuffle();
             }
         });
+        refreshAdapter();
     }
 
-    private void refreshAdapter() {
+    public void refreshAdapter() {
         List<Song> songs = songListService.getAllSongsList();
         songListAdapter = new SongsListAdapter(getActivity(), songs);
         listView.setAdapter(songListAdapter);

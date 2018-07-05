@@ -8,7 +8,7 @@ import fifthelement.theelement.application.Services;
 import fifthelement.theelement.objects.Song;
 
 public class SongListService {
-    private List<Song> allSongsList = Services.getSongService().getSongs();
+    private List<Song> allSongsList;
     private List<Song> currentSongsList = null;
     private List<Song> shuffledList = null;
     private boolean shuffled = false;
@@ -35,9 +35,6 @@ public class SongListService {
 
     public void setAllSongsList(List<Song> allSongs){ this.allSongsList = allSongs; }
     public List<Song> getAllSongsList() { return allSongsList; }
-    public List<Song> getSongList(){
-        return allSongsList;
-    }
 
     // Skips to the next song in the list
     public Song skipToNextSong() {
