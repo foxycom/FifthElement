@@ -20,13 +20,15 @@ public class SongListServiceTest {
 
     @Before
     public void setup() {
+
+        classUnderTest = new SongListService();
         songsList = new ArrayList<Song>();
-        songsList.add(new Song("Pristine", "data/song1"));
-        songsList.add(new Song("This is America", "data/song2"));
-        songsList.add(new Song("Nice For What", "data/song3"));
-        songsList.add(new Song("Geyser", "data/song4"));
-        songsList.add(new Song("Purity", "data/song5"));
-        classUnderTest = new SongListService(songsList);
+        songsList.add(new Song( "Pristine", "data/song1"));
+        songsList.add(new Song( "This is America", "data/song2"));
+        songsList.add(new Song( "Nice For What", "data/song3"));
+        songsList.add(new Song( "Geyser", "data/song4"));
+        songsList.add(new Song( "Purity", "data/song5"));
+        classUnderTest.setCurrentSongsList(songsList);
     }
 
     @Test
@@ -66,7 +68,7 @@ public class SongListServiceTest {
     }
 
     @Test
-    public void skipSongAtListEndTest() {
+    public void skipSongAtListEndTest(){
         classUnderTest.getSongAtIndex(4);
         Song nextSong = classUnderTest.skipToNextSong();
 
@@ -74,7 +76,7 @@ public class SongListServiceTest {
     }
 
     @Test
-    public void prevSongAtListStartTest() {
+    public void prevSongAtListStartTest(){
         classUnderTest.getSongAtIndex(0);
         Song prevSong = classUnderTest.goToPrevSong();
 
@@ -82,61 +84,11 @@ public class SongListServiceTest {
     }
 
     @Test
-    public void removeSongFromListTest() {
+    public void removeSongFromListTest(){
         Song toRemove = classUnderTest.getSongAtIndex(0);
         classUnderTest.removeSongFromList(toRemove);
         Song shouldNotEqual = classUnderTest.getSongAtIndex(0);
 
         Assert.assertFalse("Remove function did not remove the song from the list", shouldNotEqual.getName().equals("Pristine"));
-    }
-
-    @Test
-    public void updateShuffledListTest(){
-        //make sure the same size
-        classUnderTest.updateShuffledList();
-
-        Assert.assertTrue("Update shuffled list function did not remove any songs", classUnderTest.getSongList().size() == 5);
-
-        String firstSong = classUnderTest.getSongList().get(0).getName();
-        for (int i = 1; i< classUnderTest.getSongList().size(); i++){
-            Assert.assertTrue("Ensure no duplicate songs", !firstSong.equals(classUnderTest.getSongList().get(i).getName()));
-        }
-    }
-
-    @Test
-    public void setSongsListTest(){
-        ArrayList<Song> newSongs = new ArrayList<>();
-        Song newSong = new Song("Pristine", "data/song1");
-        newSongs.add(newSong);
-
-        classUnderTest.setSongList(newSongs);
-
-        Assert.assertTrue("New song list is only one song big", classUnderTest.getSongList().size() == 1);
-        Assert.assertTrue("New song list is only one song big", classUnderTest.getSongList().get(0).equals(newSong));
-    }
-
-    @Test
-    public void shuffleListTest(){
-        //make sure the same size
-        classUnderTest.shuffle();
-
-        Assert.assertTrue("Shuffle function did not remove any songs", classUnderTest.getSongList().size() == 5);
-
-        String firstSong = classUnderTest.getSongList().get(0).getName();
-        for (int i = 1; i< classUnderTest.getSongList().size(); i++){
-            Assert.assertTrue("Ensure no duplicate songs", !firstSong.equals(classUnderTest.getSongList().get(i).getName()));
-        }
-
-        Assert.assertTrue("Make sure shuffled is true", classUnderTest.getShuffled());
-    }
-
-    //setAutoplayEnabled
-    @Test
-    public void setAutoplayEnabledTest(){
-        classUnderTest.setAutoplayEnabled(false);
-        Assert.assertTrue("Autoplay is set to false", !classUnderTest.getAutoplayEnabled());
-
-        classUnderTest.setAutoplayEnabled(true);
-        Assert.assertTrue("Autoplay is set to true", classUnderTest.getAutoplayEnabled());
     }
 }

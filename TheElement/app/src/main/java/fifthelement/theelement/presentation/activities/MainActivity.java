@@ -102,14 +102,15 @@ public class MainActivity extends AppCompatActivity {
         songListService = Services.getSongListService();
         playlistService = new PlaylistService();
         //Sets current song list to the list of all songs in app
-        songListService.setSongList(songService.getSongs());
+        songListService.setAllSongsList(songService.getSongs());
+        songListService.setCurrentSongsList(songService.getSongs());
 
         createDefaultPage();
     }
 
     private void createDefaultPage() {
         Fragment fragment = null;
-        Class fragmentClass = SongListFragment.class;
+        Class fragmentClass = HomeFragment.class;
         try{
             fragment = (Fragment) fragmentClass.newInstance();
         }

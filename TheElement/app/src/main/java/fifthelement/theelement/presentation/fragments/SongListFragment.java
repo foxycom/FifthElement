@@ -72,20 +72,20 @@ public class SongListFragment extends Fragment {
     }
 
     private void refreshAdapter() {
-        List<Song> songs = songListService.getSongList();
+        List<Song> songs = songListService.getAllSongsList();
         songListAdapter = new SongsListAdapter(getActivity(), songs);
         listView.setAdapter(songListAdapter);
     }
 
     private void sortSongs() {
-        List<Song> songs = songListService.getSongList();
+        List<Song> songs = songListService.getAllSongsList();
         songListService.sortSongs(songs);
-        songListService.setSongList(songs);
+        songListService.setAllSongsList(songs);
         refreshAdapter();
     }
 
     private void playSong(ListView listView) {
-        List<Song> songs = songListService.getSongList();
+        List<Song> songs = songListService.getCurrentSongsList();
         if(songs != null) {
             final SongsListAdapter songListAdapter = new SongsListAdapter(getActivity(), songs);
             listView.setAdapter(songListAdapter);
@@ -94,14 +94,10 @@ public class SongListFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                    //boolean result = musicService.playSongAsync(songListService.getSongAtIndex(position));
-                    Song song = songListService.getSongAtIndex(position);
-                    if ( song != null)
-                        Services.getMusicService().playSongAsync(song);
-
-                    //if (result) {
-                    //    ((MainActivity) getActivity()).startNotificationService(view.findViewById(R.id.toolbar));
-                    //}
+                    boolean result = musicService.playSongAsync(songListService.getSongAtIndex(position));
+                    if (result) {
+                        ((MainActivity) getActivity()).startNotificationService(view.findViewById(R.id.toolbar));
+                    }
                 }
             });
         }
@@ -111,7 +107,7 @@ public class SongListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if(songListAdapter != null) {
-            songListService.setSongList(songService.getSongs());
+            songListService.setAllSongsList(songService.getSongs());
             sortSongs();
             songListService.updateShuffledList();
         }
