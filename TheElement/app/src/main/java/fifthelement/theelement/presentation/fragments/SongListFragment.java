@@ -94,11 +94,14 @@ public class SongListFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                    boolean result = musicService.playSongAsync(songListService.getSongAtIndex(position));
-                    if (result) {
-                        songListService.setShuffleEnabled(false);
-                        ((MainActivity) getActivity()).startNotificationService(view.findViewById(R.id.toolbar));
-                    }
+                    //boolean result = musicService.playSongAsync(songListService.getSongAtIndex(position));
+                    Song song = songListService.getSongAtIndex(position);
+                    if ( song != null)
+                        Services.getMusicService().playSongAsync(song);
+
+                    //if (result) {
+                    //    ((MainActivity) getActivity()).startNotificationService(view.findViewById(R.id.toolbar));
+                    //}
                 }
             });
         }

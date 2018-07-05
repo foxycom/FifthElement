@@ -102,17 +102,14 @@ public class SongListService {
         }
     }
 
-    public void setShuffleEnabled(boolean value){
-        shuffled = value;
-    }
-
     public void setAutoplayEnabled(boolean newValue){
         autoplayEnabled = newValue;
     }
 
-    public void setShuffled(boolean value){
-        shuffled = value;
+    public boolean getShuffled(){
+        return shuffled;
     }
+
 
     public boolean getAutoplayEnabled(){
         return autoplayEnabled;

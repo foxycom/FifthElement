@@ -179,7 +179,6 @@ public class PlaylistListAdapter extends BaseAdapter {
                 Helpers.getToastHelper(context).sendToast("Playing " + playlist.getName());
 
             SongListService songListService = getSongListService();
-            songListService.setShuffled(true);
             songListService.setSongList(playlist.getSongs());
             songListService.setAutoplayEnabled(true);
 
