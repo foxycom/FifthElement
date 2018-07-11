@@ -107,16 +107,16 @@ public class SongServiceTest {
 
         Song songTestOne = classUnderTest.getSongByUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         Assert.assertTrue("Song name not updated", "new song".equals(songTestOne.getName()));
-        Assert.assertTrue("Song author not updated", "new Author".equals(songTestOne.getAuthor().getName()));
-        Assert.assertTrue("Song album not updated", "new Album".equals(songTestOne.getAlbum().getName()));
+        Assert.assertTrue("Song author not updated", "new Author".equals(songTestOne.getAuthorName().getName()));
+        Assert.assertTrue("Song album not updated", "new Album".equals(songTestOne.getAlbumName().getName()));
         Assert.assertTrue("Song genre not updated", "Rock".equals(songTestOne.getGenre()));
 
         classUnderTest.updateSongWithParameters(songTwo, "new song", "", "","");
 
         Song songTestTwo = classUnderTest.getSongByUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         Assert.assertTrue("Song name not updated", "new song".equals(songTestTwo.getName()));
-        Assert.assertTrue("Song author not updated", songTestTwo.getAuthor()== null);
-        Assert.assertTrue("Song album not updated", songTestTwo.getAlbum()== null);
+        Assert.assertTrue("Song author not updated", songTestTwo.getAuthorName()== null);
+        Assert.assertTrue("Song album not updated", songTestTwo.getAlbumName()== null);
         Assert.assertTrue("Song genre not updated", songTestTwo.getGenre() == null);
     }
 

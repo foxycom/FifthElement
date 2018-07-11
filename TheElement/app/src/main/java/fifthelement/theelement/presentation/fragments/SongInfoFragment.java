@@ -1,9 +1,7 @@
 package fifthelement.theelement.presentation.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,15 +34,15 @@ public class SongInfoFragment extends Fragment {
         songName.setText(song.getName());
 
         TextView artistName = (TextView) view.findViewById(R.id.song_info_artist);
-        if(song.getAuthor() != null) {
-            artistName.setText(song.getAuthor().getName());
+        if(song.getAuthorName() != null) {
+            artistName.setText(song.getAuthorName());
         } else {
             artistName.setText("");
         }
 
         TextView albumName = (TextView) view.findViewById(R.id.song_info_album);
-        if(song.getAlbum() != null) {
-            albumName.setText(song.getAlbum().getName());
+        if(song.getAlbumName() != null) {
+            albumName.setText(song.getAlbumName());
         } else {
             albumName.setText("");
         }

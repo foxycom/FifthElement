@@ -43,7 +43,7 @@ public class AuthorService {
     public boolean deleteAuthor(Author author) throws IllegalArgumentException {
         if(author == null)
             throw new IllegalArgumentException();
-        return authorPersistence.deleteAuthor(author.getUUID());
+        return authorPersistence.deleteAuthor(author);
     }
 
 }

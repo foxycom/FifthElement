@@ -6,17 +6,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import fifthelement.theelement.R;
 import fifthelement.theelement.application.Services;
@@ -139,16 +131,16 @@ public class NotificationService extends Service {
             views.setImageViewBitmap(R.id.status_bar_album_art, SongUtil.getSongAlbumArt(this, musicService.getCurrentSongPlaying()));
             bigViews.setImageViewBitmap(R.id.status_bar_album_art, SongUtil.getSongAlbumArt(this, musicService.getCurrentSongPlaying()));
 
-            if(musicService.getCurrentSongPlaying().getAuthor() != null) {
-                views.setTextViewText(R.id.status_bar_artist_name, musicService.getCurrentSongPlaying().getAuthor().getName());
-                bigViews.setTextViewText(R.id.status_bar_artist_name, musicService.getCurrentSongPlaying().getAuthor().getName());
+            if(musicService.getCurrentSongPlaying().getAuthorName() != null) {
+                views.setTextViewText(R.id.status_bar_artist_name, musicService.getCurrentSongPlaying().getAuthorName());
+                bigViews.setTextViewText(R.id.status_bar_artist_name, musicService.getCurrentSongPlaying().getAuthorName());
             } else {
                 views.setTextViewText(R.id.status_bar_artist_name, "");
                 bigViews.setTextViewText(R.id.status_bar_artist_name, "");
             }
 
-            if(musicService.getCurrentSongPlaying().getAlbum() != null)
-                bigViews.setTextViewText(R.id.status_bar_album_name, musicService.getCurrentSongPlaying().getAlbum().getName());
+            if(musicService.getCurrentSongPlaying().getAlbumName() != null)
+                bigViews.setTextViewText(R.id.status_bar_album_name, musicService.getCurrentSongPlaying().getAlbumName());
             else
                 bigViews.setTextViewText(R.id.status_bar_album_name, "");
         }

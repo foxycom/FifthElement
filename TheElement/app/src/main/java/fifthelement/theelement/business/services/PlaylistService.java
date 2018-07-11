@@ -41,7 +41,7 @@ public class PlaylistService {
                 List<Song> updatedSongs = new ArrayList<>();
                 if(songs != null) {
                     for(Song song : songs) {
-                        song = songPersistence.getSongByUUID(song.getUUID());
+                        song = songPersistence.getSongByUUID(song.getUUID()); //TODO: Change this to use song + album + artist name for lookup
                         updatedSongs.add(song);
                     }
                 }

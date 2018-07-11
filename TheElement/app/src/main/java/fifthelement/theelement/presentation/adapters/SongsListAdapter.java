@@ -3,7 +3,6 @@ package fifthelement.theelement.presentation.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,9 +23,7 @@ import fifthelement.theelement.objects.Author;
 import fifthelement.theelement.objects.Song;
 import fifthelement.theelement.persistence.hsqldb.PersistenceException;
 import fifthelement.theelement.presentation.activities.MainActivity;
-import fifthelement.theelement.presentation.fragments.SearchFragment;
 import fifthelement.theelement.presentation.fragments.SongInfoFragment;
-import fifthelement.theelement.presentation.fragments.SongListFragment;
 
 public class SongsListAdapter extends BaseAdapter {
     Context context;
@@ -63,13 +60,8 @@ public class SongsListAdapter extends BaseAdapter {
         songName.setSelected(true);
         TextView authorName = (TextView) view.findViewById(R.id.secondary_string);
         final Song printSong = songs.get(i);
-        Author author = printSong.getAuthor();
-        String authors = "";
-        if(author != null) {
-            authors += author.getName();
-        }
         songName.setText(printSong.getName());
-        authorName.setText(authors);
+        authorName.setText(printSong.getAuthorName());
         ImageButton button = view.findViewById(R.id.popup_button);
         songOptions(activity, printSong, button);
         return view;
@@ -118,7 +110,7 @@ public class SongsListAdapter extends BaseAdapter {
         try {
             Helpers.getToastHelper(context).sendToast("Deleted " + song.getName());
             if(Services.getMusicService().getCurrentSongPlaying() != null
-                    && Services.getMusicService().getCurrentSongPlaying().getUUID().equals(song.getUUID())) {
+                    && Services.getMusicService().getCurrentSongPlaying().equals(song)) {
                 Services.getMusicService().reset();
 
             }

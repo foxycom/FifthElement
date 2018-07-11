@@ -17,10 +17,10 @@ public class PlaylistPersistenceStub implements PlaylistPersistence {
         this.playlists = new ArrayList<>();
 
         Song song1 = new Song("This Is America", "android.resource://fifthelement.theelement/raw/childish_gambino_this_is_america");
-        song1.setAuthor(new Author("Childish Gambino"));
+        song1.setAuthorName(new Author("Childish Gambino"));
         Song song2 = new Song("Classical Music", "android.resource://fifthelement.theelement/raw/classical_music");
         Song song3 = new Song("Adventure of a Lifetime", "android.resource://fifthelement.theelement/raw/coldplay_adventure_of_a_lifetime");
-        song3.setAuthor(new Author("Coldplay"));
+        song3.setAuthorName(new Author("Coldplay"));
 
 
         Playlist playlist1 = new Playlist("Actual Playlist");

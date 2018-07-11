@@ -127,12 +127,12 @@ public class SongPersistenceHSQLDB implements SongPersistence {
             st.setString(1, song.getUUID().toString());
             st.setString(2, song.getName());
             st.setString(3, song.getPath());
-            if(song.getAuthor() != null)
-                st.setString(4, song.getAuthor().getUUID().toString());
+            if(song.getAuthorName() != null)
+                st.setString(4, song.getAuthorName().getUUID().toString());
             else
                 st.setString(4, null);
-            if(song.getAlbum() != null)
-                st.setString(5, song.getAlbum().getUUID().toString());
+            if(song.getAlbumName() != null)
+                st.setString(5, song.getAlbumName().getUUID().toString());
             else
                 st.setString(5, null);
             st.setString(6, song.getGenre());
@@ -153,14 +153,14 @@ public class SongPersistenceHSQLDB implements SongPersistence {
             final PreparedStatement st = c.prepareStatement("UPDATE songs SET songName = ?, songPath = ?, authorUUID = ?, albumUUID = ?, songGenre = ?, songRating = ? WHERE songUUID = ?");
             st.setString(1, song.getName());
             st.setString(2, song.getPath());
-            if(song.getAuthor() != null){
-                st.setString(3, song.getAuthor().getUUID().toString() );
+            if(song.getAuthorName() != null){
+                st.setString(3, song.getAuthorName().getUUID().toString() );
             } else {
                 st.setString(3,null);
             }
 
-            if(song.getAlbum() != null) {
-                st.setString(4, song.getAlbum().getUUID().toString());
+            if(song.getAlbumName() != null) {
+                st.setString(4, song.getAlbumName().getUUID().toString());
             } else {
                 st.setString(4, null);
             }

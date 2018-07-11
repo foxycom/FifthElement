@@ -1,7 +1,6 @@
 package fifthelement.theelement.business.services;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -56,10 +55,10 @@ public class SongService {
 
         if(songs != null) {
             for(Song song : songs) {
-                if(song.getAuthor() != null)
-                    song.setAuthor(authorPersistence.getAuthorByUUID(song.getAuthor().getUUID()));
-                if(song.getAlbum() != null) {
-                    song.setAlbum(albumPersistence.getAlbumByUUID(song.getAlbum().getUUID()));
+                if(song.getAuthorName() != null)
+                    song.setAuthorName(authorPersistence.getAuthorByUUID(song.getAuthorName())); //TODO: Change these to get by names
+                if(song.getAlbumName() != null) {
+                    song.setAlbumName(albumPersistence.getAlbumByUUID(song.getAlbumName(), song.getAuthorName())); //TODO: Change these to get by names
                 }
             }
         }
@@ -75,18 +74,16 @@ public class SongService {
         Album album = null;
         Song song = new Song(songName, realPath);
         if(songArtist != null) {
+            song.setAuthorName(songArtist);
+            //TODO: Check to see if equivalent author exists in DB, if not, insert new one!
             author = new Author(songArtist);
-            song.setAuthor(author);
             authorService.insertAuthor(author);
         }
 
         if(songAlbum != null) {
-            album = new Album(songAlbum);
-            if(author != null)
-                album.setAuthor(author);
-            else
-                album.setAuthor(null);
-            song.setAlbum(album);
+            song.setAlbumName(songAlbum);
+            //TODO: Check to see if equivalent album exists in DB, if not, insert new one!
+            album = new Album(songAlbum, songArtist);
             albumService.insertAlbum(album);
         }
 
@@ -112,35 +109,22 @@ public class SongService {
 
     public boolean updateSongWithParameters(Song song, String songName, String author, String album, String genre) {
 
-        if(!songName.equals("")){
-            song.setName(songName);
-        }
+        song.setName(songName);
 
+        song.setAuthorName(author);
         Author newAuthor = new Author(author);
-        if(!author.equals("")) { // TODO: Seperate Method For This?
-            song.setAuthor(newAuthor);
+        if(!author.equals("")) { //TODO: Have persistence check to see if author with name exists, if not, insert new!
             authorService.insertAuthor(newAuthor);
-        }else {
-            song.setAuthor(null);
         }
 
-        if(!album.equals("")) { // TODO: Seperate Method For This?
-            Album newAlbum = new Album(album);
-            if(!author.equals(""))
-                newAlbum.setAuthor(newAuthor);
-            else
-                newAlbum.setAuthor(null);
-            song.setAlbum(newAlbum);
+        song.setAlbumName(album);
+        Album newAlbum = new Album(album, author);
+        if(!album.equals("")) { // TODO: Have persistence check to see if album with name + author exists, if not, insert new one!
             albumService.insertAlbum(newAlbum);
-        } else {
-            song.setAlbum(null);
         }
 
-        if(genre.equals("")) {
-            song.setGenre(null);
-        } else {
-            song.setGenre(genre);
-        }
+        song.setGenre(genre);
+
         return updateSong(song);
     }
 
@@ -153,10 +137,7 @@ public class SongService {
     public boolean deleteSong(Song songToRemove) throws PersistenceException, IllegalArgumentException {
         if(songToRemove == null)
             throw new IllegalArgumentException();
-        Song song = songPersistence.getSongByUUID(songToRemove.getUUID());
-
-        if( song != null ) {
-
+        else{
             // deletes songs from existing PlayList if it's there
             // implementation for this hasn't been fully decided. this is a STUB
             //for( PlayList p : playlistPersistence.getAllPlayLists() ) {
@@ -165,11 +146,8 @@ public class SongService {
             //        playlistPersistence.updatePlayList(p);
             //    }
             //}
-
-            songPersistence.deleteSong(song);
-            return true;
+            return songPersistence.deleteSong(songToRemove);
         }
-        return false;
     }
 
     // Method checks if any song already has the same path

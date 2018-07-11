@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 import fifthelement.theelement.application.Persistence;
-import fifthelement.theelement.application.Services;
 import fifthelement.theelement.objects.Album;
 import fifthelement.theelement.objects.Author;
 import fifthelement.theelement.objects.Song;
@@ -98,8 +97,8 @@ public class AlbumPersistenceHSQLDB implements AlbumPersistence {
             final PreparedStatement st = c.prepareStatement("INSERT INTO albums VALUES(?, ?, ?)");
             st.setString(1, album.getUUID().toString());
             st.setString(2, album.getName());
-            if(album.getAuthor() != null)
-                st.setString(3, album.getAuthor().getUUID().toString());
+            if(album.getAuthorName() != null)
+                st.setString(3, album.getAuthorName().getUUID().toString());
             else
                 st.setString(3, null);
 

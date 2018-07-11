@@ -1,64 +1,40 @@
 package fifthelement.theelement.objects;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import fifthelement.theelement.application.Services;
-
 public class Song implements Comparable<Song>{
-    private UUID uuid;
     private String songName;
     private String path;
     private String genre;
-    private Author author;
-    private Album album;
+    private String authorName;
+    private String albumName;
     private double rating;
 
     public Song(String name, String path){
-        this.uuid = UUID.randomUUID();
         this.songName = name;
         this.path = path;
         this.genre = "";
-        author = null;
-        album = null;
+        authorName = "";
+        albumName = "";
         rating = 0;
     }
 
-    public Song(UUID uuid, String name, String path){
-        this.uuid = uuid;
+    public Song(String name, String path, String authorName, String albumName, String genre){
         this.songName = name;
         this.path = path;
-        this.genre = "";
-        author = null;
-        album = null;
-        rating = 0;
-    }
-
-    public Song(UUID uuid, String name, String path, Author author, Album album, String genre){
-        this.uuid = uuid;
-        this.songName = name;
-        this.path = path;
-        this.author = author;
-        this.album = album;
+        this.authorName = authorName;
+        this.albumName = albumName;
         this.genre = genre;
         rating = 0;
     }
 
-    public Song(UUID uuid, String name, String path, Author author, Album album, String genre, double rating) {
-        this.uuid = uuid;
+    public Song(String name, String path, String authorName, String albumName, String genre, double rating) {
         this.songName = name;
         this.path = path;
-        this.author = author;
-        this.album = album;
+        this.authorName = authorName;
+        this.albumName = albumName;
         this.genre = genre;
         this.rating = rating;
     }
     // getters
-    public UUID getUUID(){
-        return uuid;
-    }
-
     public String getName(){
         return songName;
     }
@@ -71,21 +47,17 @@ public class Song implements Comparable<Song>{
         return genre;
     }
 
-    public Author getAuthor(){
-        return author;
+    public String getAuthorName(){
+        return authorName;
     }
 
-    public Album getAlbum(){
-        return album;
+    public String getAlbumName(){
+        return albumName;
     }
 
     public double getRating() { return rating; }
 
     // setters
-    public void setUUID(UUID uuid) {
-        this.uuid = uuid;
-    }
-
     public void setName(String newName){
         this.songName = newName;
     }
@@ -98,13 +70,14 @@ public class Song implements Comparable<Song>{
         this.genre = genre;
     }
 
-    public void setAuthor(Author author){
-        this.author =  author;
+    public void setAuthorName(String authorName){
+        this.authorName = authorName;
     }
 
-    public void setAlbum(Album album){
-        this.album =  album;
+    public void setAlbumName(String albumName){
+        this.albumName = albumName;
     }
+
     public void setRating(double rating){ this.rating = rating; }
 
     @Override
@@ -114,6 +87,7 @@ public class Song implements Comparable<Song>{
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof Song && ((Song) object).getUUID() == this.getUUID();
+        return object instanceof Song && ((Song)object).getName().equals(this.getName())
+                && ((Song)object).getAlbumName().equals(this.getAlbumName()) && ((Song)object).getAuthorName().equals(this.getAuthorName());
     }
 }
