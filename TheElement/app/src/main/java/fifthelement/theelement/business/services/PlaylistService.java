@@ -37,7 +37,7 @@ public class PlaylistService {
 
         if(playlists != null) {
             for(Playlist playlist : playlists) {
-                List<Song> songs = playlistPersistence.getAllSongsByPlaylist(playlist.getUUID());
+                List<Song> songs = playlistPersistence.getAllSongsByPlaylist(playlist.getName());
                 List<Song> updatedSongs = new ArrayList<>();
                 if(songs != null) {
                     for(Song song : songs) {
@@ -74,6 +74,6 @@ public class PlaylistService {
     public boolean deletePlaylist(Playlist playlist) throws IllegalArgumentException {
         if(playlist == null)
             throw new IllegalArgumentException();
-        return playlistPersistence.deletePlaylist(playlist.getUUID());
+        return playlistPersistence.deletePlaylist(playlist.getName());
     }
 }
