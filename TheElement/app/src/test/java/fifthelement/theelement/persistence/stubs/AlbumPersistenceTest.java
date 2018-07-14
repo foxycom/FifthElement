@@ -44,7 +44,7 @@ public class AlbumPersistenceTest {
 
     @Test
     public void testValidGetAlbumById() {
-        Album album = classUnderTest.getAlbumByUUID(uuidOne);
+        Album album = classUnderTest.getAlbumByName(uuidOne);
         Assert.assertTrue("testValidGetAlbumById: album id != 1",album.getUUID().compareTo(uuidOne) == 0);
         Assert.assertTrue("testValidGetAlbumById: album name != Album1", "Album1".equals(album.getName()));
     }
@@ -52,7 +52,7 @@ public class AlbumPersistenceTest {
     @Test
     public void testInvalidGetAlbumById() {
         UUID genUuid = UUID.randomUUID();
-        Album album = classUnderTest.getAlbumByUUID(genUuid);
+        Album album = classUnderTest.getAlbumByName(genUuid);
         Assert.assertTrue("testInvalidGetAlbumById: album != null",album == null);
     }
 
@@ -65,7 +65,7 @@ public class AlbumPersistenceTest {
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testValidStoreAlbum: album size != 4, actual size: "+albums.size(), albums.size() == 5);
 
-        album = classUnderTest.getAlbumByUUID(albumUUID);
+        album = classUnderTest.getAlbumByName(albumUUID);
         Assert.assertTrue("testValidStoreAlbum: album id != 4",album.getUUID().compareTo(albumUUID) == 0);
     }
 
@@ -85,7 +85,7 @@ public class AlbumPersistenceTest {
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testValidUpdateAlbum: album size != 3, actual size: "+albums.size(), albums.size() == 4);
 
-        album = classUnderTest.getAlbumByUUID(uuidTwo);
+        album = classUnderTest.getAlbumByName(uuidTwo);
         Assert.assertTrue("testValidUpdateAlbum: album name != Changed Album Name", "Changed Album Name".equals(album.getName()));
     }
 
@@ -98,7 +98,7 @@ public class AlbumPersistenceTest {
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testValidUpdateAlbumNotExist: album size != 3, actual size: "+albums.size(), albums.size() == 4);
 
-        album = classUnderTest.getAlbumByUUID(uuidFour);
+        album = classUnderTest.getAlbumByName(uuidFour);
         Assert.assertFalse("testValidUpdateAlbumNotExist: album != null",album == null);
     }
 
@@ -112,27 +112,27 @@ public class AlbumPersistenceTest {
 
     @Test
     public void testValidDeleteAlbum() {
-        boolean result = classUnderTest.deleteAlbum(classUnderTest.getAlbumByUUID(uuidOne));
+        boolean result = classUnderTest.deleteAlbum(classUnderTest.getAlbumByName(uuidOne));
 
         Assert.assertTrue("testValidDeleteAlbum: result = false", result);
 
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testValidDeleteAlbum: album size != 2, actual size: "+albums.size(), albums.size() == 3);
 
-        Album album = classUnderTest.getAlbumByUUID(uuidOne);
+        Album album = classUnderTest.getAlbumByName(uuidOne);
         Assert.assertTrue("testValidDeleteAlbum: album != null",album == null);
     }
 
     @Test
     public void testNotFoundDeleteAlbum() {
-        boolean result = classUnderTest.deleteAlbum(classUnderTest.getAlbumByUUID(uuidFour));
+        boolean result = classUnderTest.deleteAlbum(classUnderTest.getAlbumByName(uuidFour));
 
         Assert.assertTrue("testNotFoundDeleteAlbum: result = true", result);
 
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testNotFoundDeleteAlbum: album size != 3, actual size: "+albums.size(), albums.size() == 3);
 
-        Album album = classUnderTest.getAlbumByUUID(uuidFour);
+        Album album = classUnderTest.getAlbumByName(uuidFour);
         Assert.assertTrue("testNotFoundDeleteAlbum: album != null",album == null);
     }
 

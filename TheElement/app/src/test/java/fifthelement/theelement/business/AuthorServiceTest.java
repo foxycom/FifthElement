@@ -75,7 +75,7 @@ public class AuthorServiceTest {
         Assert.assertTrue("updateAuthorValidTest: updateReturn != true", updateReturn);
         Assert.assertTrue("updateAuthorValidTest: song size != 4", classUnderTest.getAuthors().size() == 4);
 
-        Author author = classUnderTest.getAuthorByUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Author author = classUnderTest.getAuthorByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         Assert.assertTrue("updateAuthorValidTest: song name != Changed Author Name", "Bob Jim".equals(author.getName()));
     }
 
@@ -108,7 +108,7 @@ public class AuthorServiceTest {
         Assert.assertTrue("deleteAuthorValidTest: deleteReturn != true", deleteReturn);
         Assert.assertTrue("deleteAuthorValidTest: author size != 3", classUnderTest.getAuthors().size() == 3);
 
-        Author deletedAuthor = classUnderTest.getAuthorByUUID(authorUUID);
+        Author deletedAuthor = classUnderTest.getAuthorByName(authorUUID);
         Assert.assertNull("deleteAuthorValidTest: deletedAuthor != null", deletedAuthor);
     }
 

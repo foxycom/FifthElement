@@ -42,7 +42,7 @@ public class AuthorPersistenceTest {
 
     @Test
     public void testValidGetAuthorById() {
-        Author author = classUnderTest.getAuthorByUUID(uuidOne);
+        Author author = classUnderTest.getAuthorByName(uuidOne);
         Assert.assertTrue("testValidGetAuthorById: author id != 1",author.getUUID().compareTo(uuidOne) == 0);
         Assert.assertTrue("testValidGetAuthorById: author name != Bob Marley", "Bob Marley".equals(author.getName()));
     }
@@ -50,7 +50,7 @@ public class AuthorPersistenceTest {
     @Test
     public void testInvalidGetAuthorById() {
         UUID genUuid = UUID.randomUUID();
-        Author author = classUnderTest.getAuthorByUUID(genUuid);
+        Author author = classUnderTest.getAuthorByName(genUuid);
         Assert.assertTrue("testInvalidGetAuthorById: author != null",author == null);
     }
 
@@ -63,7 +63,7 @@ public class AuthorPersistenceTest {
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testValidStoreAuthor: author size != 4, actual size: "+authors.size(), authors.size() == 5);
 
-        author = classUnderTest.getAuthorByUUID(authorUUID);
+        author = classUnderTest.getAuthorByName(authorUUID);
         Assert.assertTrue("testValidStoreAuthor: author id != 4",author.getUUID().compareTo(authorUUID) == 0);
     }
 
@@ -83,7 +83,7 @@ public class AuthorPersistenceTest {
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testValidUpdateAuthor: author size != 3, actual size: "+authors.size(), authors.size() == 4);
 
-        author = classUnderTest.getAuthorByUUID(uuidTwo);
+        author = classUnderTest.getAuthorByName(uuidTwo);
         Assert.assertTrue("testValidUpdateAuthor: author name != Changed Author Name", "Changed Author Name".equals(author.getName()));
     }
 
@@ -96,7 +96,7 @@ public class AuthorPersistenceTest {
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testValidUpdateAuthorNotExist: author size != 3, actual size: "+authors.size(), authors.size() == 4);
 
-        author = classUnderTest.getAuthorByUUID(uuidFour);
+        author = classUnderTest.getAuthorByName(uuidFour);
         Assert.assertFalse("testValidUpdateAuthorNotExist: author != null",author == null);
     }
 
@@ -108,27 +108,27 @@ public class AuthorPersistenceTest {
 
     @Test
     public void testValidDeleteAuthor() {
-        boolean result = classUnderTest.deleteAuthor(classUnderTest.getAuthorByUUID(uuidOne));
+        boolean result = classUnderTest.deleteAuthor(classUnderTest.getAuthorByName(uuidOne));
 
         Assert.assertTrue("testValidDeleteAuthor: result = false", result);
 
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testValidDeleteAuthor: author size != 2, actual size: "+authors.size(), authors.size() == 3);
 
-        Author author = classUnderTest.getAuthorByUUID(uuidOne);
+        Author author = classUnderTest.getAuthorByName(uuidOne);
         Assert.assertTrue("testValidDeleteAuthor: author != null",author == null);
     }
 
     @Test
     public void testNotFoundDeleteAuthor() {
-        boolean result = classUnderTest.deleteAuthor(classUnderTest.getAuthorByUUID(uuidFour));
+        boolean result = classUnderTest.deleteAuthor(classUnderTest.getAuthorByName(uuidFour));
 
         Assert.assertTrue("testNotFoundDeleteAuthor: result = true", result);
 
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testNotFoundDeleteAuthor: author size != 3, actual size: "+authors.size(), authors.size() == 3);
 
-        Author author = classUnderTest.getAuthorByUUID(uuidFour);
+        Author author = classUnderTest.getAuthorByName(uuidFour);
         Assert.assertTrue("testNotFoundDeleteAuthor: author != null",author == null);
     }
 

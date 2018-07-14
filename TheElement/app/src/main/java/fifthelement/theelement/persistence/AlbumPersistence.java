@@ -10,7 +10,7 @@ public interface AlbumPersistence {
 
     List<Album> getAllAlbums() throws PersistenceException; // some unordered list.
 
-    Album getAlbumByUUID(UUID uuid) throws PersistenceException, IllegalArgumentException; // get a album by UUID
+    Album getAlbumByName(String albumName) throws PersistenceException, IllegalArgumentException; // get a album by UUID
 
     // using boolean since its a stub. would make changes when implementing db anyway
     boolean storeAlbum(Album album) throws PersistenceException, IllegalArgumentException; // checks & ignores duplicates
@@ -19,9 +19,9 @@ public interface AlbumPersistence {
 
     boolean deleteAlbum(Album album) throws PersistenceException, IllegalArgumentException; // delete's using UUID
 
-    boolean deleteAlbum(UUID uuid) throws PersistenceException, IllegalArgumentException; // delete's using UUID
+    boolean deleteAlbum(String albumName) throws PersistenceException, IllegalArgumentException; // delete's using UUID
 
     boolean albumExists(Album album) throws PersistenceException, IllegalArgumentException; // sees if an album exists by UUID
 
-    boolean albumExists(UUID uuid) throws PersistenceException, IllegalArgumentException; // sees if an album exists by UUID
+    boolean albumExists(String albumName) throws PersistenceException, IllegalArgumentException; // sees if an album exists by UUID
 }

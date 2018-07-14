@@ -8,8 +8,8 @@ public class Song implements Comparable<Song>{
     private String albumName;
     private double rating;
 
-    public Song(String name, String path){
-        this.songName = name;
+    public Song(String songName, String path){
+        this.songName = songName;
         this.path = path;
         this.genre = "";
         authorName = "";
@@ -17,8 +17,8 @@ public class Song implements Comparable<Song>{
         rating = 0;
     }
 
-    public Song(String name, String path, String authorName, String albumName, String genre){
-        this.songName = name;
+    public Song(String songName, String path, String authorName, String albumName, String genre){
+        this.songName = songName;
         this.path = path;
         this.authorName = authorName;
         this.albumName = albumName;
@@ -26,8 +26,8 @@ public class Song implements Comparable<Song>{
         rating = 0;
     }
 
-    public Song(String name, String path, String authorName, String albumName, String genre, double rating) {
-        this.songName = name;
+    public Song(String songName, String path, String authorName, String albumName, String genre, double rating) {
+        this.songName = songName;
         this.path = path;
         this.authorName = authorName;
         this.albumName = albumName;

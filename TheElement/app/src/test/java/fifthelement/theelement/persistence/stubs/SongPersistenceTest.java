@@ -38,14 +38,14 @@ public class SongPersistenceTest {
 
     @Test
     public void testValidGetSongById() {
-        Song song = classUnderTest.getSongByUUID(uuidOne);
+        Song song = classUnderTest.getSongByName(uuidOne);
         Assert.assertTrue("testValidGetSongById: song id != 1",song.getUUID().compareTo(uuidOne) == 0);
         Assert.assertTrue("testValidGetSongById: song name != Test Song", "Test Song".equals(song.getName()));
     }
 
     @Test
     public void testInvalidGetSongById() {
-        Song song = classUnderTest.getSongByUUID(uuidFour);
+        Song song = classUnderTest.getSongByName(uuidFour);
         Assert.assertTrue("testInvalidGetSongById: song != null",song == null);
     }
 
@@ -58,7 +58,7 @@ public class SongPersistenceTest {
         List<Song> songs = classUnderTest.getAllSongs();
         Assert.assertTrue("testValidStoreSong: song size != 4", songs.size() == 4);
 
-        song = classUnderTest.getSongByUUID(songUUID);
+        song = classUnderTest.getSongByName(songUUID);
         Assert.assertTrue("testValidStoreSong: song id != 4",song.getUUID().compareTo(songUUID) == 0);
     }
 
@@ -78,7 +78,7 @@ public class SongPersistenceTest {
         List<Song> songs = classUnderTest.getAllSongs();
         Assert.assertTrue("testValidUpdateSong: song size != 3", songs.size() == 3);
 
-        song = classUnderTest.getSongByUUID(uuidTwo);
+        song = classUnderTest.getSongByName(uuidTwo);
         Assert.assertTrue("testValidUpdateSong: song name != Changed Song Name", "Changed Song Name".equals(song.getName()));
     }
 
@@ -91,7 +91,7 @@ public class SongPersistenceTest {
         List<Song> songs = classUnderTest.getAllSongs();
         Assert.assertTrue("testValidUpdateSongNotExist: song size != 3", songs.size() == 3);
 
-        song = classUnderTest.getSongByUUID(uuidFour);
+        song = classUnderTest.getSongByName(uuidFour);
         Assert.assertTrue("testValidUpdateSongNotExist: song != null",song == null);
     }
 
@@ -110,7 +110,7 @@ public class SongPersistenceTest {
         List<Song> songs = classUnderTest.getAllSongs();
         Assert.assertTrue("testValidDeleteSong: song size != 2", songs.size() == 2);
 
-        Song song = classUnderTest.getSongByUUID(uuidOne);
+        Song song = classUnderTest.getSongByName(uuidOne);
         Assert.assertTrue("testValidDeleteSong: song != null",song == null);
     }
 
@@ -123,7 +123,7 @@ public class SongPersistenceTest {
         List<Song> songs = classUnderTest.getAllSongs();
         Assert.assertTrue("testNotFoundDeleteSong: song size != 3", songs.size() == 3);
 
-        Song song = classUnderTest.getSongByUUID(uuidFour);
+        Song song = classUnderTest.getSongByName(uuidFour);
         Assert.assertTrue("testNotFoundDeleteSong: song != null",song == null);
     }
 

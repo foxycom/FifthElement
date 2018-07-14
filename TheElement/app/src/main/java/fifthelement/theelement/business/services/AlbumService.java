@@ -21,8 +21,8 @@ public class AlbumService {
         this.albumPersistence = albumPersistence;
     }
 
-    public Album getAlbumByUUID(UUID uuid) {
-        return albumPersistence.getAlbumByUUID(uuid);
+    public Album getAlbumByName(String albumName) {
+        return albumPersistence.getAlbumByName(albumName);
     }
 
     public List<Album> getAlbums() {

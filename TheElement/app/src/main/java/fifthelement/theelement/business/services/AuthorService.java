@@ -20,8 +20,8 @@ public class AuthorService {
         this.authorPersistence = authorPersistence;
     }
 
-    public Author getAuthorByUUID(UUID uuid) {
-        return authorPersistence.getAuthorByUUID(uuid);
+    public Author getAuthorByName(String authorName) {
+        return authorPersistence.getAuthorByName(authorName);
     }
 
     public List<Author> getAuthors() {

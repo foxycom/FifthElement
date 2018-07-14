@@ -27,11 +27,11 @@ public class AlbumPersistenceStub implements AlbumPersistence {
     }
 
     @Override
-    public Album getAlbumByUUID(UUID uuid) throws IllegalArgumentException {
-        if(uuid == null)
+    public Album getAlbumByName(String albumName) throws IllegalArgumentException {
+        if(albumName == null)
             throw new IllegalArgumentException("Cannot get album with a null UUID");
         for(Album a : this.albumList)
-            if(a.getUUID().compareTo(uuid) == 0)
+            if(a.getName().compareTo(albumName) == 0)
                 return a;
         return null;
     }
@@ -40,7 +40,7 @@ public class AlbumPersistenceStub implements AlbumPersistence {
     public boolean storeAlbum(Album album) throws IllegalArgumentException {
         if(album == null)
             throw new IllegalArgumentException("Cant store an album with null Album");
-        if(albumExists(album.getUUID()))
+        if(albumExists(album.getName()))
             throw new IllegalArgumentException("Cant store an album with existing UUID");
         this.albumList.add(album);
         return true;
@@ -52,7 +52,7 @@ public class AlbumPersistenceStub implements AlbumPersistence {
         if(album == null)
             throw new IllegalArgumentException("Cannot update a null album");
         for(int index = 0; index < albumList.size(); index++) {
-            if(albumList.get(index).getUUID().compareTo(album.getUUID()) == 0) {
+            if(albumList.get(index).getName().compareTo(album.getName()) == 0) {
                 this.albumList.set(index, album);
                 found = true;
                 break;
@@ -65,16 +65,16 @@ public class AlbumPersistenceStub implements AlbumPersistence {
     public boolean deleteAlbum(Album album) throws IllegalArgumentException {
         if (album == null)
             throw new IllegalArgumentException("Cannot delete album with a null album");
-        return this.deleteAlbum(album.getUUID());
+        return this.deleteAlbum(album.getName());
     }
 
     @Override
-    public boolean deleteAlbum(UUID uuid) throws IllegalArgumentException  {
+    public boolean deleteAlbum(String albumName) throws IllegalArgumentException  {
         boolean removed = false;
-        if(uuid == null)
+        if(albumName == null)
             throw new IllegalArgumentException("Cannot delete album with a null UUID");
         for(int index = 0; index < albumList.size(); index++) {
-            if(albumList.get(index).getUUID().compareTo(uuid) == 0) {
+            if(albumList.get(index).getName().compareTo(albumName) == 0) {
                 this.albumList.remove(index);
                 removed = true;
             }
@@ -86,16 +86,16 @@ public class AlbumPersistenceStub implements AlbumPersistence {
     public boolean albumExists(Album album) {
         if(album == null)
             throw new IllegalArgumentException("Cannot check exists with a null Album");
-        return albumExists(album.getUUID());
+        return albumExists(album.getName());
     }
 
     @Override
-    public boolean albumExists(UUID uuid) {
-        if(uuid == null)
+    public boolean albumExists(String albumName) {
+        if(albumName == null)
             throw new IllegalArgumentException("Cannot check exists with a null UUID");
         boolean exists = false;
         for(Album a : this.albumList)
-            if(a.getUUID().compareTo(uuid) == 0) {
+            if(a.getName().compareTo(albumName) == 0) {
                 exists = true;
                 break;
             }

@@ -76,7 +76,7 @@ public class AlbumServiceTest {
         Assert.assertTrue("updateAlbumValidTest: updateReturn != true", updateReturn);
         Assert.assertTrue("updateAlbumValidTest: album size != 4", classUnderTest.getAlbums().size() == 4);
 
-        Album album = classUnderTest.getAlbumByUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Album album = classUnderTest.getAlbumByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         Assert.assertTrue("updateAlbumValidTest: album name != Changed Album Name", "Gold".equals(album.getName()));
     }
 
@@ -109,7 +109,7 @@ public class AlbumServiceTest {
         Assert.assertTrue("deleteAlbumValidTest: deleteReturn != true", deleteReturn);
         Assert.assertTrue("deleteAlbumValidTest: song size != 3", classUnderTest.getAlbums().size() == 3);
 
-        Album deletedAlbum = classUnderTest.getAlbumByUUID(albumUUID);
+        Album deletedAlbum = classUnderTest.getAlbumByName(albumUUID);
         Assert.assertNull("deleteAlbumValidTest: deletedAlbum != null", deletedAlbum);
     }
 

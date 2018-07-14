@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.UUID;
 
 import fifthelement.theelement.objects.Author;
-import fifthelement.theelement.objects.Playlist;
 import fifthelement.theelement.persistence.AuthorPersistence;
 
 public class AuthorPersistenceHSQLDB implements AuthorPersistence {
@@ -26,22 +25,18 @@ public class AuthorPersistenceHSQLDB implements AuthorPersistence {
     }
 
     private Author fromResultSet(final ResultSet rs) throws SQLException {
-        final UUID authorUUID = UUID.fromString(rs.getString("authorUUID"));
         final String authorName = rs.getString("authorName");
-        return new Author(authorUUID, authorName);
+        return new Author(authorName);
     }
 
     @Override
     public List<Author> getAllAuthors() throws PersistenceException {
-
         final List<Author> authors = new ArrayList<>();
 
-        try
-        {
+        try {
             final Statement st = c.createStatement();
             final ResultSet rs = st.executeQuery("SELECT * FROM authors");
-            while (rs.next())
-            {
+            while (rs.next()) {
                 final Author author = fromResultSet(rs);
                 authors.add(author);
             }
@@ -49,21 +44,18 @@ public class AuthorPersistenceHSQLDB implements AuthorPersistence {
             st.close();
 
             return authors;
-        }
-        catch (final SQLException e)
-        {
+        }catch (final SQLException e) {
             throw new PersistenceException(e);
         }
     }
 
     @Override
-    public Author getAuthorByUUID(UUID uuid) throws PersistenceException, IllegalArgumentException {
-        if(uuid == null)
+    public Author getAuthorByName(String authorName) throws PersistenceException, IllegalArgumentException {
+        if(authorName == null)
             throw new IllegalArgumentException("Cannot get author with a null UUID");
         try {
-            final PreparedStatement st = c.prepareStatement("SELECT * FROM authors WHERE authorUUID = ?");
-            String uuidString = uuid.toString();
-            st.setString(1, uuidString);
+            final PreparedStatement st = c.prepareStatement("SELECT * FROM authors WHERE authorName = ?");
+            st.setString(1, authorName);
 
             final ResultSet rs = st.executeQuery();
             rs.next();
@@ -72,7 +64,7 @@ public class AuthorPersistenceHSQLDB implements AuthorPersistence {
             st.close();
 
             return author;
-        } catch (final SQLException e) {
+        }catch (final SQLException e) {
             throw new PersistenceException(e);
         }
     }
@@ -84,9 +76,8 @@ public class AuthorPersistenceHSQLDB implements AuthorPersistence {
 //        if(authorExists(author.getUUID()))
 //            throw new IllegalArgumentException("Cant store an author with existing UUID");
         try {
-            final PreparedStatement st = c.prepareStatement("INSERT INTO authors VALUES(?, ?)");
-            st.setString(1, author.getUUID().toString());
-            st.setString(2, author.getName());
+            final PreparedStatement st = c.prepareStatement("INSERT INTO authors VALUES(?)");
+            st.setString(1, author.getName());
 
             st.executeUpdate();
 
@@ -101,10 +92,8 @@ public class AuthorPersistenceHSQLDB implements AuthorPersistence {
         if(author == null)
             throw new IllegalArgumentException("Cannot update a null author");
         try {
-            final PreparedStatement st = c.prepareStatement("UPDATE authors SET authorName = ? WHERE authorUUID = ?");
+            final PreparedStatement st = c.prepareStatement("UPDATE authors SET authorName = ? WHERE authorName = ?");
             st.setString(1, author.getName());
-            st.setString(2, author.getUUID().toString());
-
             st.executeUpdate();
 
             return true;
@@ -117,24 +106,24 @@ public class AuthorPersistenceHSQLDB implements AuthorPersistence {
     public boolean deleteAuthor(Author author) throws PersistenceException, IllegalArgumentException  {
         if (author == null)
             throw new IllegalArgumentException("Cannot delete an author with a null author");
-        return deleteAuthor(author.getUUID());
+        return deleteAuthor(author.getName());
     }
 
     @Override
-    public boolean deleteAuthor(UUID uuid) throws PersistenceException, IllegalArgumentException {
-        boolean removed = false;
-        if(uuid == null)
-            throw new IllegalArgumentException("Cannot delete an author with a null UUID");
+    public boolean deleteAuthor(String authorName) throws PersistenceException, IllegalArgumentException {
+        boolean removed = authorExists(authorName);
+        if(authorName == null)
+            throw new IllegalArgumentException("Cannot delete an author with a null");
         try {
             final PreparedStatement st = c.prepareStatement("DELETE FROM authors WHERE authorUUID = ?");
-            st.setString(1, uuid.toString());
-
+            st.setString(1, authorName);
             st.executeUpdate();
 
-        } catch (final SQLException e) {
+            removed = removed != authorExists(authorName);
+
+        }catch (final SQLException e) {
             throw new PersistenceException(e);
         }
-
         return  removed;
     }
 
@@ -142,14 +131,14 @@ public class AuthorPersistenceHSQLDB implements AuthorPersistence {
     public boolean authorExists(Author author) throws PersistenceException, IllegalArgumentException {
         if(author == null)
             throw new IllegalArgumentException("Cannot check exists with a null Author");
-        return authorExists(author.getUUID());
+        return authorExists(author.getName());
     }
 
     @Override
-    public boolean authorExists(UUID uuid) throws PersistenceException, IllegalArgumentException {
-        if(uuid == null)
-            throw new IllegalArgumentException("Cannot check exists with a null UUID");
-        Author author = getAuthorByUUID(uuid);
+    public boolean authorExists(String authorName) throws PersistenceException, IllegalArgumentException {
+        if(authorName == null)
+            throw new IllegalArgumentException("Cannot check exists with a null");
+        Author author = getAuthorByName(authorName);
         return author != null;
     }
 }

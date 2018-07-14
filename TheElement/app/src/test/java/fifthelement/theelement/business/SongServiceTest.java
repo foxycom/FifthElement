@@ -89,7 +89,7 @@ public class SongServiceTest {
         Assert.assertTrue("updateSongValidTest: updateReturn != true", updateReturn);
         Assert.assertTrue("updateSongValidTest: album size != 6", classUnderTest.getSongs().size() == 6);
 
-        Song song = classUnderTest.getSongByUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song song = classUnderTest.getSongByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         Assert.assertTrue("updateSongValidTest: song name != Changed Song Name", "Other song".equals(song.getName()));
     }
 
@@ -105,7 +105,7 @@ public class SongServiceTest {
 
         classUnderTest.updateSongWithParameters(songTwo, "new song", "new Author", "new Album","Rock");
 
-        Song songTestOne = classUnderTest.getSongByUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song songTestOne = classUnderTest.getSongByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         Assert.assertTrue("Song name not updated", "new song".equals(songTestOne.getName()));
         Assert.assertTrue("Song author not updated", "new Author".equals(songTestOne.getAuthorName().getName()));
         Assert.assertTrue("Song album not updated", "new Album".equals(songTestOne.getAlbumName().getName()));
@@ -113,7 +113,7 @@ public class SongServiceTest {
 
         classUnderTest.updateSongWithParameters(songTwo, "new song", "", "","");
 
-        Song songTestTwo = classUnderTest.getSongByUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song songTestTwo = classUnderTest.getSongByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         Assert.assertTrue("Song name not updated", "new song".equals(songTestTwo.getName()));
         Assert.assertTrue("Song author not updated", songTestTwo.getAuthorName()== null);
         Assert.assertTrue("Song album not updated", songTestTwo.getAlbumName()== null);
@@ -131,7 +131,7 @@ public class SongServiceTest {
         songTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         classUnderTest.updateSongWithRating(songTwo, 4.5);
 
-        Song song = classUnderTest.getSongByUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song song = classUnderTest.getSongByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         Assert.assertTrue("Song rating not updated", song.getRating() == 4.5);
     }
 
@@ -190,7 +190,7 @@ public class SongServiceTest {
         Assert.assertTrue("deleteSongValidTest: deleteReturn != true", deleteReturn);
         Assert.assertTrue("deleteSongValidTest: song size != 5", classUnderTest.getSongs().size() == 5);
 
-        Song deletedSong = classUnderTest.getSongByUUID(songUUID);
+        Song deletedSong = classUnderTest.getSongByName(songUUID);
         Assert.assertNull("deleteSongValidTest: deletedSong != null", deletedSong);
     }
 

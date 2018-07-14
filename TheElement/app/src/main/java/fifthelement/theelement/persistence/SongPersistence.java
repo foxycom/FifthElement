@@ -10,9 +10,11 @@ public interface SongPersistence {
 
     List<Song> getAllSongs() throws PersistenceException; // some unordered list.
 
-    Song getSongByUUID(UUID ID) throws PersistenceException, IllegalArgumentException; // get a song by UUID
+    Song getSongByName(String name) throws PersistenceException, IllegalArgumentException; // get a song by UUID
 
-    List<Song> getSongsByAlbumUUID(UUID ID) throws PersistenceException, IllegalArgumentException; // get a song by UUID
+    List<Song> getSongsByAlbumName(String albumName) throws PersistenceException, IllegalArgumentException;
+
+    List<Song> getSongsByAuthorName(String authorName) throws PersistenceException, IllegalArgumentException;
 
     // using boolean since its a stub. would make changes when implementing db anyway
     boolean storeSong(Song song) throws PersistenceException, IllegalArgumentException; // checks & ignores duplicates
@@ -21,10 +23,10 @@ public interface SongPersistence {
 
     boolean deleteSong(Song song) throws PersistenceException, IllegalArgumentException;
 
-    boolean deleteSong(UUID uuid) throws PersistenceException, IllegalArgumentException; // delete's using UUID
+    boolean deleteSong(String songName) throws PersistenceException, IllegalArgumentException; // delete's using UUID
 
     boolean songExists(Song song) throws PersistenceException, IllegalArgumentException; // sees if a song exists by UUID
 
-    boolean songExists(UUID uuid) throws PersistenceException, IllegalArgumentException; // sees if a song exists by UUID
+    boolean songExists(String songName) throws PersistenceException, IllegalArgumentException; // sees if a song exists by UUID
 
 }

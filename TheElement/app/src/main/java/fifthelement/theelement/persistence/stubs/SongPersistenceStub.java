@@ -2,7 +2,6 @@ package fifthelement.theelement.persistence.stubs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import fifthelement.theelement.objects.Author;
 import fifthelement.theelement.objects.Song;
@@ -40,11 +39,11 @@ public class SongPersistenceStub implements SongPersistence {
     }
 
     @Override
-    public Song getSongByUUID(final UUID uuid) throws IllegalArgumentException {
-        if(uuid == null)
-            throw new IllegalArgumentException("Cannot get song with a null UUID");
+    public Song getSongByName(final String authorName) throws IllegalArgumentException {
+        if(authorName == null)
+            throw new IllegalArgumentException("Cannot get song with a null String");
         for(Song s : this.songList)
-            if(s.getUUID().compareTo(uuid) == 0)
+            if(s.getName().compareTo(authorName) == 0)
                 return s;
         return null;
     }
@@ -53,8 +52,8 @@ public class SongPersistenceStub implements SongPersistence {
     public boolean storeSong(Song song) throws IllegalArgumentException {
         if(song == null)
             throw new IllegalArgumentException("Cant store a song with null Song");
-        if(songExists(song.getUUID()))
-            throw new IllegalArgumentException("Cant store a song with existing UUID");
+        if(songExists(song.getName()))
+            throw new IllegalArgumentException("Cant store a song with existing String");
         this.songList.add(song);
         return true;
     }
@@ -65,7 +64,7 @@ public class SongPersistenceStub implements SongPersistence {
         if(song == null)
             throw new IllegalArgumentException("Cannot update a null song");
         for(int index = 0; index < songList.size(); index++)
-            if(songList.get(index).getUUID().compareTo(song.getUUID()) == 0) {
+            if(songList.get(index).getName().compareTo(song.getName()) == 0) {
                 this.songList.set(index, song);
                 found = true;
             }
@@ -76,16 +75,16 @@ public class SongPersistenceStub implements SongPersistence {
     public boolean deleteSong(Song song) throws IllegalArgumentException {
         if(song == null)
             throw new IllegalArgumentException("Cannot delete song with a null Song");
-        return deleteSong(song.getUUID());
+        return deleteSong(song.getName());
     }
 
     @Override
-    public boolean deleteSong(UUID uuid) throws IllegalArgumentException {
+    public boolean deleteSong(String authorName) throws IllegalArgumentException {
         boolean removed = false;
-        if(uuid == null)
-            throw new IllegalArgumentException("Cannot delete song with a null UUID");
+        if(authorName == null)
+            throw new IllegalArgumentException("Cannot delete song with a null String");
         for(int index = 0; index < songList.size(); index++) {
-            if(songList.get(index).getUUID().compareTo(uuid) == 0) {
+            if(songList.get(index).getName().compareTo(authorName) == 0) {
                 this.songList.remove(index);
                 removed = true;
             }
@@ -97,16 +96,16 @@ public class SongPersistenceStub implements SongPersistence {
     public boolean songExists(Song song) throws IllegalArgumentException {
         if(song == null)
             throw new IllegalArgumentException("Cannot check exists with a null Song");
-        return songExists(song.getUUID());
+        return songExists(song.getName());
     }
 
     @Override
-    public boolean songExists(UUID uuid) throws IllegalArgumentException {
-        if(uuid == null)
-            throw new IllegalArgumentException("Cannot check exists with a null UUID");
+    public boolean songExists(String authorName) throws IllegalArgumentException {
+        if(authorName == null)
+            throw new IllegalArgumentException("Cannot check exists with a null String");
         boolean exists = false;
         for(Song s : this.songList)
-            if(s.getUUID().compareTo(uuid) == 0) {
+            if(s.getName().compareTo(authorName) == 0) {
                 exists = true;
                 break;
             }
@@ -114,9 +113,16 @@ public class SongPersistenceStub implements SongPersistence {
     }
 
     @Override
-    public List<Song> getSongsByAlbumUUID(UUID uuid) throws IllegalArgumentException {
-        if(uuid == null)
-            throw new IllegalArgumentException("Cannot get song with a null album UUID");
+    public List<Song> getSongsByAlbumName(String albumName) throws IllegalArgumentException {
+        if(albumName == null)
+            throw new IllegalArgumentException("Cannot get song with a null album String");
+        return null;
+    }
+
+    @Override
+    public List<Song> getSongsByAuthorName(String authorName) throws IllegalArgumentException {
+        if(authorName == null)
+            throw new IllegalArgumentException("Cannot get song with a null album String");
         return null;
     }
 }

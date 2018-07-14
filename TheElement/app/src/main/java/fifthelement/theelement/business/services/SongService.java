@@ -46,8 +46,8 @@ public class SongService {
 
     }
 
-    public Song getSongByUUID(UUID uuid) {
-        return songPersistence.getSongByUUID(uuid);
+    public Song getSongByName(String songName) {
+        return songPersistence.getSongByName(songName);
     }
 
     public List<Song> getSongs() throws PersistenceException {
@@ -56,9 +56,9 @@ public class SongService {
         if(songs != null) {
             for(Song song : songs) {
                 if(song.getAuthorName() != null)
-                    song.setAuthorName(authorPersistence.getAuthorByUUID(song.getAuthorName())); //TODO: Change these to get by names
+                    song.setAuthorName(authorPersistence.getAuthorByName(song.getAuthorName()).getName()); //TODO: Change these to get by names
                 if(song.getAlbumName() != null) {
-                    song.setAlbumName(albumPersistence.getAlbumByUUID(song.getAlbumName(), song.getAuthorName())); //TODO: Change these to get by names
+                    song.setAlbumName(albumPersistence.getAlbumByName(song.getAlbumName()).getName()); //TODO: Change these to get by names
                 }
             }
         }
