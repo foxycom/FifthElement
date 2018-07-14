@@ -19,19 +19,19 @@ public class AlbumPersistenceTest {
     private AlbumPersistenceStub classUnderTest;
     private ArrayList<Album> albumList;
 
-    private static UUID uuidOne;
-    private static UUID uuidTwo;
-    private static UUID uuidThree;
-    private static UUID uuidFour;
+    private static String albumNameOne;
+    private static String albumNameTwo;
+    private static String albumNameThree;
+    private static String albumNameFour;
 
     @Before
     public void initClass() {
         albumList = getAlbumList();
         classUnderTest = new AlbumPersistenceStub();
-        uuidOne = classUnderTest.getAllAlbums().get(0).getUUID();
-        uuidTwo = classUnderTest.getAllAlbums().get(1).getUUID();
-        uuidThree = classUnderTest.getAllAlbums().get(2).getUUID();
-        uuidFour = classUnderTest.getAllAlbums().get(3).getUUID();
+        albumNameOne = classUnderTest.getAllAlbums().get(0).getName();
+        albumNameTwo = classUnderTest.getAllAlbums().get(1).getName();
+        albumNameThree = classUnderTest.getAllAlbums().get(2).getName();
+        albumNameFour = classUnderTest.getAllAlbums().get(3).getName();
 
 
     }
@@ -44,61 +44,58 @@ public class AlbumPersistenceTest {
 
     @Test
     public void testValidGetAlbumById() {
-        Album album = classUnderTest.getAlbumByName(uuidOne);
-        Assert.assertTrue("testValidGetAlbumById: album id != 1",album.getUUID().compareTo(uuidOne) == 0);
+        Album album = classUnderTest.getAlbumByName(albumNameOne);
+        Assert.assertTrue("testValidGetAlbumById: album id != 1",album.getName().equals(albumNameOne));
         Assert.assertTrue("testValidGetAlbumById: album name != Album1", "Album1".equals(album.getName()));
     }
 
     @Test
     public void testInvalidGetAlbumById() {
-        UUID genUuid = UUID.randomUUID();
-        Album album = classUnderTest.getAlbumByName(genUuid);
+        Album album = classUnderTest.getAlbumByName("Random album");
         Assert.assertTrue("testInvalidGetAlbumById: album != null",album == null);
     }
 
     @Test
     public void testValidStoreAlbum() {
         Album album = new Album("Inserted Album");
-        UUID albumUUID = album.getUUID();
         classUnderTest.storeAlbum(album);
 
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testValidStoreAlbum: album size != 4, actual size: "+albums.size(), albums.size() == 5);
 
-        album = classUnderTest.getAlbumByName(albumUUID);
-        Assert.assertTrue("testValidStoreAlbum: album id != 4",album.getUUID().compareTo(albumUUID) == 0);
+        album = classUnderTest.getAlbumByName("Inserted Album");
+        Assert.assertTrue("testValidStoreAlbum: album id != 4",album.getName().equals("Inserted Album"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidAlbumStore() {
         Album album = new Album("Some Album");
-        album.setUUID(uuidOne);
+        album.setName(albumNameOne);
         classUnderTest.storeAlbum(album);
     }
 
     @Test
     public void testValidUpdateAlbum() {
-        Album album = new Album("Changed Album Name");
-        album.setUUID(uuidTwo);
+        Album album = new Album(albumNameTwo);
+        album.setAuthorName(albumNameTwo);
         classUnderTest.updateAlbum(album);
 
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testValidUpdateAlbum: album size != 3, actual size: "+albums.size(), albums.size() == 4);
 
-        album = classUnderTest.getAlbumByName(uuidTwo);
-        Assert.assertTrue("testValidUpdateAlbum: album name != Changed Album Name", "Changed Album Name".equals(album.getName()));
+        album = classUnderTest.getAlbumByName("Changed Album Name");
+        Assert.assertTrue("testValidUpdateAlbum: album name != Changed Album Name", albumNameTwo.equals(album.getAuthorName()));
     }
 
     @Test
     public void testValidUpdateAlbumNotExist() {
         Album album = new Album("This album does not exist");
-        album.setUUID(uuidFour);
         classUnderTest.updateAlbum(album);
 
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testValidUpdateAlbumNotExist: album size != 3, actual size: "+albums.size(), albums.size() == 4);
 
-        album = classUnderTest.getAlbumByName(uuidFour);
+        album = classUnderTest.getAlbumByName(albumNameFour);
         Assert.assertFalse("testValidUpdateAlbumNotExist: album != null",album == null);
     }
 
@@ -112,27 +109,27 @@ public class AlbumPersistenceTest {
 
     @Test
     public void testValidDeleteAlbum() {
-        boolean result = classUnderTest.deleteAlbum(classUnderTest.getAlbumByName(uuidOne));
+        boolean result = classUnderTest.deleteAlbum(classUnderTest.getAlbumByName(albumNameOne));
 
         Assert.assertTrue("testValidDeleteAlbum: result = false", result);
 
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testValidDeleteAlbum: album size != 2, actual size: "+albums.size(), albums.size() == 3);
 
-        Album album = classUnderTest.getAlbumByName(uuidOne);
+        Album album = classUnderTest.getAlbumByName(albumNameOne);
         Assert.assertTrue("testValidDeleteAlbum: album != null",album == null);
     }
 
     @Test
     public void testNotFoundDeleteAlbum() {
-        boolean result = classUnderTest.deleteAlbum(classUnderTest.getAlbumByName(uuidFour));
+        boolean result = classUnderTest.deleteAlbum(classUnderTest.getAlbumByName(albumNameFour));
 
         Assert.assertTrue("testNotFoundDeleteAlbum: result = true", result);
 
         List<Album> albums = classUnderTest.getAllAlbums();
         Assert.assertTrue("testNotFoundDeleteAlbum: album size != 3, actual size: "+albums.size(), albums.size() == 3);
 
-        Album album = classUnderTest.getAlbumByName(uuidFour);
+        Album album = classUnderTest.getAlbumByName(albumNameFour);
         Assert.assertTrue("testNotFoundDeleteAlbum: album != null",album == null);
     }
 
@@ -143,22 +140,14 @@ public class AlbumPersistenceTest {
     }
 
     private static ArrayList<Album> getAlbumList() {
-        String idOne = "493410b3-dd0b-4b78-97bf-289f50f6e74f";
-        String idTwo = "593410b3-dd0b-4b78-97bf-289f50f6e74f";
-        String idThree = "693410b3-dd0b-4b78-97bf-289f50f6e74f";
-        String idFour = "793410b3-dd0b-4b78-97bf-289f50f6e74f";
-        uuidOne = UUID.fromString(idOne);
-        uuidTwo = UUID.fromString(idTwo);
-        uuidThree = UUID.fromString(idThree);
-        uuidFour = UUID.fromString(idFour);
 
         Album albumOne = new Album("Test Album");
         Album albumTwo = new Album("Another Test Album");
         Album albumThree = new Album("Some Album");
 
-        albumOne.setUUID(uuidOne);
-        albumTwo.setUUID(uuidTwo);
-        albumThree.setUUID(uuidThree);
+        albumOne.setName(albumNameOne);
+        albumTwo.setName(albumNameTwo);
+        albumThree.setName(albumNameThree);
 
         ArrayList<Album> albums = new ArrayList<>();
         albums.add(albumOne);

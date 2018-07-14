@@ -19,19 +19,19 @@ public class AuthorPersistenceTest {
     private AuthorPersistenceStub classUnderTest;
     private ArrayList<Author> authorList;
 
-    private static UUID uuidOne;
-    private static UUID uuidTwo;
-    private static UUID uuidThree;
-    private static UUID uuidFour;
+    private static String songNameOne;
+    private static String songNameTwo;
+    private static String songNameThree;
+    private static String songNameFour;
 
     @Before
     public void initClass() {
         authorList = getAuthorList();
         classUnderTest = new AuthorPersistenceStub();
-        uuidOne = classUnderTest.getAllAuthors().get(0).getUUID();
-        uuidTwo = classUnderTest.getAllAuthors().get(1).getUUID();
-        uuidThree = classUnderTest.getAllAuthors().get(2).getUUID();
-        uuidFour = classUnderTest.getAllAuthors().get(3).getUUID();
+        songNameOne = classUnderTest.getAllAuthors().get(0).getName();
+        songNameTwo = classUnderTest.getAllAuthors().get(1).getName();
+        songNameThree = classUnderTest.getAllAuthors().get(2).getName();
+        songNameFour = classUnderTest.getAllAuthors().get(3).getName();
     }
 
     @Test
@@ -42,61 +42,60 @@ public class AuthorPersistenceTest {
 
     @Test
     public void testValidGetAuthorById() {
-        Author author = classUnderTest.getAuthorByName(uuidOne);
-        Assert.assertTrue("testValidGetAuthorById: author id != 1",author.getUUID().compareTo(uuidOne) == 0);
+        Author author = classUnderTest.getAuthorByName(songNameOne);
+        Assert.assertTrue("testValidGetAuthorById: author id != 1",author.getName().equals(songNameOne));
         Assert.assertTrue("testValidGetAuthorById: author name != Bob Marley", "Bob Marley".equals(author.getName()));
     }
 
     @Test
     public void testInvalidGetAuthorById() {
-        UUID genUuid = UUID.randomUUID();
-        Author author = classUnderTest.getAuthorByName(genUuid);
+        Author author = classUnderTest.getAuthorByName("Random Author");
         Assert.assertTrue("testInvalidGetAuthorById: author != null",author == null);
     }
 
     @Test
     public void testValidStoreAuthor() {
         Author author = new Author("Inserted Author");
-        UUID authorUUID = author.getUUID();
+        String authorName = author.getName();
         classUnderTest.storeAuthor(author);
 
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testValidStoreAuthor: author size != 4, actual size: "+authors.size(), authors.size() == 5);
 
-        author = classUnderTest.getAuthorByName(authorUUID);
-        Assert.assertTrue("testValidStoreAuthor: author id != 4",author.getUUID().compareTo(authorUUID) == 0);
+        author = classUnderTest.getAuthorByName(authorName);
+        Assert.assertTrue("testValidStoreAuthor: author id != 4",author.getName().equals(authorName));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidAuthorStore() {
         Author author = new Author("Some Author");
-        author.setUUID(uuidOne);
+        author.setName(songNameOne);
         classUnderTest.storeAuthor(author);
     }
 
     @Test
     public void testValidUpdateAuthor() {
         Author author = new Author("Changed Author Name");
-        author.setUUID(uuidTwo);
+        author.setName(songNameTwo);
         classUnderTest.updateAuthor(author);
 
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testValidUpdateAuthor: author size != 3, actual size: "+authors.size(), authors.size() == 4);
 
-        author = classUnderTest.getAuthorByName(uuidTwo);
+        author = classUnderTest.getAuthorByName(songNameTwo);
         Assert.assertTrue("testValidUpdateAuthor: author name != Changed Author Name", "Changed Author Name".equals(author.getName()));
     }
 
     @Test
     public void testValidUpdateAuthorNotExist() {
         Author author = new Author("This author does not exist");
-        author.setUUID(uuidFour);
+        author.setName(songNameFour);
         classUnderTest.updateAuthor(author);
 
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testValidUpdateAuthorNotExist: author size != 3, actual size: "+authors.size(), authors.size() == 4);
 
-        author = classUnderTest.getAuthorByName(uuidFour);
+        author = classUnderTest.getAuthorByName(songNameFour);
         Assert.assertFalse("testValidUpdateAuthorNotExist: author != null",author == null);
     }
 
@@ -108,27 +107,27 @@ public class AuthorPersistenceTest {
 
     @Test
     public void testValidDeleteAuthor() {
-        boolean result = classUnderTest.deleteAuthor(classUnderTest.getAuthorByName(uuidOne));
+        boolean result = classUnderTest.deleteAuthor(classUnderTest.getAuthorByName(songNameOne));
 
         Assert.assertTrue("testValidDeleteAuthor: result = false", result);
 
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testValidDeleteAuthor: author size != 2, actual size: "+authors.size(), authors.size() == 3);
 
-        Author author = classUnderTest.getAuthorByName(uuidOne);
+        Author author = classUnderTest.getAuthorByName(songNameOne);
         Assert.assertTrue("testValidDeleteAuthor: author != null",author == null);
     }
 
     @Test
     public void testNotFoundDeleteAuthor() {
-        boolean result = classUnderTest.deleteAuthor(classUnderTest.getAuthorByName(uuidFour));
+        boolean result = classUnderTest.deleteAuthor(classUnderTest.getAuthorByName(songNameFour));
 
         Assert.assertTrue("testNotFoundDeleteAuthor: result = true", result);
 
         List<Author> authors = classUnderTest.getAllAuthors();
         Assert.assertTrue("testNotFoundDeleteAuthor: author size != 3, actual size: "+authors.size(), authors.size() == 3);
 
-        Author author = classUnderTest.getAuthorByName(uuidFour);
+        Author author = classUnderTest.getAuthorByName(songNameFour);
         Assert.assertTrue("testNotFoundDeleteAuthor: author != null",author == null);
     }
 
@@ -139,22 +138,13 @@ public class AuthorPersistenceTest {
     }
 
     private static ArrayList<Author> getAuthorList() {
-        String idOne = "493410b3-dd0b-4b78-97bf-289f50f6e74f";
-        String idTwo = "593410b3-dd0b-4b78-97bf-289f50f6e74f";
-        String idThree = "693410b3-dd0b-4b78-97bf-289f50f6e74f";
-        String idFour = "793410b3-dd0b-4b78-97bf-289f50f6e74f";
-        uuidOne = UUID.fromString(idOne);
-        uuidTwo = UUID.fromString(idTwo);
-        uuidThree = UUID.fromString(idThree);
-        uuidFour = UUID.fromString(idFour);
-
         Author authorOne = new Author("Test Author");
         Author authorTwo = new Author("Another Test Author");
         Author authorThree = new Author("Some Author");
 
-        authorOne.setUUID(uuidOne);
-        authorTwo.setUUID(uuidTwo);
-        authorThree.setUUID(uuidThree);
+        authorOne.setName(songNameOne);
+        authorTwo.setName(songNameTwo);
+        authorThree.setName(songNameThree);
 
         ArrayList<Author> authors = new ArrayList<>();
         authors.add(authorOne);

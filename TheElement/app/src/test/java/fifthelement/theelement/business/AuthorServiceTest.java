@@ -53,31 +53,27 @@ public class AuthorServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void insertAuthorDuplicateTest() {
         Author authorOne = new Author("Jim Bob");
-        authorOne.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Author authorTwo = new Author("Bob Jim");
-        authorTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Author authorTwo = new Author("Jim Bob");
 
         classUnderTest.insertAuthor(authorOne);
         classUnderTest.insertAuthor(authorTwo);
     }
 
-    @Test
-    public void updateAuthorValidTest() {
-        Author authorOne = new Author("Jim Bob");
-        authorOne.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Author authorTwo = new Author("Bob Jim");
-        authorTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-
-        boolean insertReturn = classUnderTest.insertAuthor(authorOne);
-        boolean updateReturn = classUnderTest.updateAuthor(authorTwo);
-
-        Assert.assertTrue("updateAuthorValidTest: insertReturn != true", insertReturn);
-        Assert.assertTrue("updateAuthorValidTest: updateReturn != true", updateReturn);
-        Assert.assertTrue("updateAuthorValidTest: song size != 4", classUnderTest.getAuthors().size() == 4);
-
-        Author author = classUnderTest.getAuthorByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Assert.assertTrue("updateAuthorValidTest: song name != Changed Author Name", "Bob Jim".equals(author.getName()));
-    }
+// TODO: can't update an author. we'll need to delete the old one and then insert this new one since primary key is authorName (unless we have another field to update, then this is possible)
+//    @Test
+//    public void updateAuthorValidTest() {
+//        Author authorOne = new Author("Jim Bob");
+//        Author authorTwo = new Author("Jim Bob");
+//
+//        boolean insertReturn = classUnderTest.insertAuthor(authorOne);
+//        boolean updateReturn = classUnderTest.updateAuthor(authorTwo);
+//
+//        Assert.assertTrue("updateAuthorValidTest: insertReturn != true", insertReturn);
+//        Assert.assertTrue("updateAuthorValidTest: updateReturn != true", updateReturn);
+//        Assert.assertTrue("updateAuthorValidTest: song size != 4", classUnderTest.getAuthors().size() == 4);
+//
+//        Assert.assertTrue("updateAuthorValidTest: song name != Changed Author Name", "Bob Jim".equals(author.getName()));
+//    }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateAuthorInValidTest() {
@@ -97,8 +93,6 @@ public class AuthorServiceTest {
     @Test
     public void deleteAuthorValidTest() {
         Author authorOne = new Author("Santa");
-        UUID authorUUID = UUID.fromString("793410b3-dd0b-4b78-97bf-289f50f6e74f");
-        authorOne.setUUID(authorUUID);
 
         boolean insertReturn = classUnderTest.insertAuthor(authorOne);
         Assert.assertTrue("deleteAuthorValidTest: insertReturn != true", insertReturn);
@@ -108,7 +102,7 @@ public class AuthorServiceTest {
         Assert.assertTrue("deleteAuthorValidTest: deleteReturn != true", deleteReturn);
         Assert.assertTrue("deleteAuthorValidTest: author size != 3", classUnderTest.getAuthors().size() == 3);
 
-        Author deletedAuthor = classUnderTest.getAuthorByName(authorUUID);
+        Author deletedAuthor = classUnderTest.getAuthorByName("Santa");
         Assert.assertNull("deleteAuthorValidTest: deletedAuthor != null", deletedAuthor);
     }
 

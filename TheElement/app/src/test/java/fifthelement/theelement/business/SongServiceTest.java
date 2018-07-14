@@ -67,9 +67,7 @@ public class SongServiceTest {
     @Test(expected = SongAlreadyExistsException.class)
     public void insertSongDuplicateTest() throws SongAlreadyExistsException{
         Song songOne = new Song("A song", "Path");
-        songOne.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Song songTwo = new Song("Other song", "Path");
-        songTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song songTwo = new Song("A song", "Path");
 
         classUnderTest.insertSong(songOne);
         classUnderTest.insertSong(songTwo);
@@ -78,9 +76,8 @@ public class SongServiceTest {
     @Test
     public void updateSongValidTest() throws Exception {
         Song songOne = new Song("A song", "Path");
-        songOne.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Song songTwo = new Song("Other song", "Path");
-        songTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song songTwo = new Song("A song", "Path");
+        songTwo.setAlbumName("Album");
 
         boolean insertReturn = classUnderTest.insertSong(songOne);
         boolean updateReturn = classUnderTest.updateSong(songTwo);
@@ -89,31 +86,28 @@ public class SongServiceTest {
         Assert.assertTrue("updateSongValidTest: updateReturn != true", updateReturn);
         Assert.assertTrue("updateSongValidTest: album size != 6", classUnderTest.getSongs().size() == 6);
 
-        Song song = classUnderTest.getSongByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Assert.assertTrue("updateSongValidTest: song name != Changed Song Name", "Other song".equals(song.getName()));
+        Song song = classUnderTest.getSongByName("A song");
+        Assert.assertTrue("updateSongValidTest: song name != Changed Song Album name", "Album".equals(song.getAlbumName()));
     }
 
     @Test
     public void updateSongWithParametersValidTest() throws Exception{
-        Album albumOne = new Album("Album");
-        Author authorOne = new Author("Author");
-        Song songOne = new Song(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"),"A song", "Path", authorOne, albumOne, "Jazz");
+        Song songOne = new Song("A song", "Path", "Author", "Album", "Jazz");
         classUnderTest.insertSong(songOne);
 
-        Song songTwo = new Song("Other song", "Path");
-        songTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song songTwo = new Song("A song", "Path");
 
         classUnderTest.updateSongWithParameters(songTwo, "new song", "new Author", "new Album","Rock");
 
-        Song songTestOne = classUnderTest.getSongByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song songTestOne = classUnderTest.getSongByName("A song");
         Assert.assertTrue("Song name not updated", "new song".equals(songTestOne.getName()));
-        Assert.assertTrue("Song author not updated", "new Author".equals(songTestOne.getAuthorName().getName()));
-        Assert.assertTrue("Song album not updated", "new Album".equals(songTestOne.getAlbumName().getName()));
+        Assert.assertTrue("Song author not updated", "new Author".equals(songTestOne.getAuthorName()));
+        Assert.assertTrue("Song album not updated", "new Album".equals(songTestOne.getAlbumName()));
         Assert.assertTrue("Song genre not updated", "Rock".equals(songTestOne.getGenre()));
 
         classUnderTest.updateSongWithParameters(songTwo, "new song", "", "","");
 
-        Song songTestTwo = classUnderTest.getSongByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song songTestTwo = classUnderTest.getSongByName("A song");
         Assert.assertTrue("Song name not updated", "new song".equals(songTestTwo.getName()));
         Assert.assertTrue("Song author not updated", songTestTwo.getAuthorName()== null);
         Assert.assertTrue("Song album not updated", songTestTwo.getAlbumName()== null);
@@ -124,14 +118,12 @@ public class SongServiceTest {
     public void updateSongWithRatingValidTest() throws Exception{
         Song songOne = new Song("A song", "Path");
         songOne.setRating(1.0);
-        songOne.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
         classUnderTest.insertSong(songOne);
 
-        Song songTwo = new Song("Other song", "Path");
-        songTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song songTwo = new Song("A song", "Path");
         classUnderTest.updateSongWithRating(songTwo, 4.5);
 
-        Song song = classUnderTest.getSongByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Song song = classUnderTest.getSongByName("A song");
         Assert.assertTrue("Song rating not updated", song.getRating() == 4.5);
     }
 
@@ -179,8 +171,6 @@ public class SongServiceTest {
     @Test
     public void deleteSongValidTest() throws Exception {
         Song songOne = new Song("21", "Path");
-        UUID songUUID = UUID.fromString("793410b3-dd0b-4b78-97bf-289f50f6e74f");
-        songOne.setUUID(songUUID);
         boolean insertReturn = classUnderTest.insertSong(songOne);
 
         Assert.assertTrue("deleteSongValidTest: insertReturn != true", insertReturn);
@@ -190,7 +180,7 @@ public class SongServiceTest {
         Assert.assertTrue("deleteSongValidTest: deleteReturn != true", deleteReturn);
         Assert.assertTrue("deleteSongValidTest: song size != 5", classUnderTest.getSongs().size() == 5);
 
-        Song deletedSong = classUnderTest.getSongByName(songUUID);
+        Song deletedSong = classUnderTest.getSongByName("21");
         Assert.assertNull("deleteSongValidTest: deletedSong != null", deletedSong);
     }
 

@@ -54,9 +54,7 @@ public class AlbumServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void insertAlbumDuplicateTest() {
         Album albumOne = new Album("21");
-        albumOne.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Album albumTwo = new Album("Gold");
-        albumTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Album albumTwo = new Album("21");
 
         classUnderTest.insertAlbum(albumOne);
         classUnderTest.insertAlbum(albumTwo);
@@ -65,9 +63,8 @@ public class AlbumServiceTest {
     @Test
     public void updateAlbumValidTest() {
         Album albumOne = new Album("21");
-        albumOne.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Album albumTwo = new Album("Gold");
-        albumTwo.setUUID(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
+        Album albumTwo = new Album("21");
+        albumTwo.setAuthorName("HEY");
 
         boolean insertReturn = classUnderTest.insertAlbum(albumOne);
         boolean updateReturn = classUnderTest.updateAlbum(albumTwo);
@@ -76,8 +73,8 @@ public class AlbumServiceTest {
         Assert.assertTrue("updateAlbumValidTest: updateReturn != true", updateReturn);
         Assert.assertTrue("updateAlbumValidTest: album size != 4", classUnderTest.getAlbums().size() == 4);
 
-        Album album = classUnderTest.getAlbumByName(UUID.fromString("493410b3-dd0b-4b78-97bf-289f50f6e74f"));
-        Assert.assertTrue("updateAlbumValidTest: album name != Changed Album Name", "Gold".equals(album.getName()));
+        Album album = classUnderTest.getAlbumByName("21");
+        Assert.assertTrue("updateAlbumValidTest: album name != Changed Author Name", "HEY".equals(album.getAuthorName()));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -98,8 +95,6 @@ public class AlbumServiceTest {
     @Test
     public void deleteAlbumValidTest() {
         Album albumOne = new Album("21");
-        UUID albumUUID = UUID.fromString("793410b3-dd0b-4b78-97bf-289f50f6e74f");
-        albumOne.setUUID(albumUUID);
 
         boolean insertReturn = classUnderTest.insertAlbum(albumOne);
         Assert.assertTrue("deleteAlbumValidTest: insertReturn != true", insertReturn);
@@ -109,7 +104,7 @@ public class AlbumServiceTest {
         Assert.assertTrue("deleteAlbumValidTest: deleteReturn != true", deleteReturn);
         Assert.assertTrue("deleteAlbumValidTest: song size != 3", classUnderTest.getAlbums().size() == 3);
 
-        Album deletedAlbum = classUnderTest.getAlbumByName(albumUUID);
+        Album deletedAlbum = classUnderTest.getAlbumByName("21");
         Assert.assertNull("deleteAlbumValidTest: deletedAlbum != null", deletedAlbum);
     }
 
