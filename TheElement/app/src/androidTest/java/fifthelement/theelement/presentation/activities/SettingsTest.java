@@ -254,7 +254,7 @@ public class SettingsTest {
                         childAtPosition(
                                 withClassName(is("android.widget.LinearLayout")),
                                 0)))
-                .atPosition(2);
+                .atPosition(3);
         appCompatTextView.perform(click());
     }
 
