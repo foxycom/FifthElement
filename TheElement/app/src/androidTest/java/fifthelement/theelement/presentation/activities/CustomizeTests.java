@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import fifthelement.theelement.R;
+import fifthelement.theelement.objects.Author;
 import fifthelement.theelement.objects.Song;
 import fifthelement.theelement.presentation.activities.TestHelpers.AndroidTestHelpers;
 
@@ -198,5 +199,19 @@ public class CustomizeTests {
         Assert.assertTrue(totalSongsOwned-1 == newTotalSongsOwned);
         Assert.assertNotNull("No song to assert with. Empty list?",oldMostPlayedSong);
         Assert.assertNotEquals(oldMostPlayedSong, newMostPlayedSong);
+
+        deleteSongRestore();
+    }
+
+    private void deleteSongRestore() {
+        Song song = new Song("Adventure of a Lifetime", "android.resource://fifthelement.theelement/raw/coldplay_adventure_of_a_lifetime");
+        song.setAuthor(new Author("Coldplay"));
+        song.setGenre("Pop");
+        song.setRating(3.5);
+        try {
+            mActivityTestRule.getActivity().getSongService().insertSong(song);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

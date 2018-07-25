@@ -10,10 +10,15 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.List;
+
 import fifthelement.theelement.R;
+import fifthelement.theelement.objects.Author;
+import fifthelement.theelement.objects.Song;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
@@ -37,6 +42,8 @@ public class SongInformationTests {
 
     @Test
     public void editSongInfoTest() {
+        List<Song> songs = getAllSongs();
+
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Navigate up"),
                         childAtPosition(
@@ -208,6 +215,7 @@ public class SongInformationTests {
                         isDisplayed()));
         textView4.check(matches(withText("")));
 
+        restoreAllSongs(songs);
     }
 
     @Test
@@ -313,5 +321,27 @@ public class SongInformationTests {
         appCompatTextView.perform(click());
 
         Assert.assertTrue("Music Service Cannot Be Null", mActivityTestRule.getActivity().getMusicService().getCurrentSongPlaying().getRating() != 0);
+    }
+
+    private void restoreAllSongs(List<Song> allSongs) {
+        try {
+            mActivityTestRule.getActivity().getSongService().clearAllSongs();
+            MainActivity mainActivity = mActivityTestRule.getActivity();
+            for (Song song: allSongs){
+                mainActivity.getSongService().insertSong(song);
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private List<Song> getAllSongs() {
+        List<Song> songs = null;
+        try {
+            songs = mActivityTestRule.getActivity().getSongService().getSongs();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return songs;
     }
 }
