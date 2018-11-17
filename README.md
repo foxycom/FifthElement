@@ -4,7 +4,7 @@ Made by:
 * Jeremy Arde
 * Adam Bouttell
 * Tife Akinola
-* Gershon
+* Gershon Reydman
 * Navjot Dhillon
 
 Just copied this straight from GitLab.
