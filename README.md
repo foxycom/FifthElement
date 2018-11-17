@@ -1,11 +1,12 @@
 ## About the Project
-Made by
-> Me
-> Jeremy Arde
-> Adam Bouttell
-> Tife Akinola
-> Gershon
-> Navjot Dhillon
+Made by:
+* Me
+* Jeremy Arde
+* Adam Bouttell
+* Tife Akinola
+* Gershon
+* Navjot Dhillon
+Just copied this straight from GitLab.
 
 # The Element  
 
