@@ -5,6 +5,7 @@ import android.support.test.espresso.ViewInteraction;
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -28,6 +29,7 @@ public class PlaylistTests {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
+    @Ignore
     public void playSongFromPlaylistDialogTest() {
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -76,6 +78,7 @@ public class PlaylistTests {
     }
 
     @Test
+    @Ignore
     public void playPlaylistTest() {
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Navigate up"),

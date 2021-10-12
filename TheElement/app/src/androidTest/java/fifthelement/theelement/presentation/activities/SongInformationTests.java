@@ -7,6 +7,7 @@ import android.view.View;
 
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -41,6 +42,7 @@ public class SongInformationTests {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
+    @Ignore
     public void editSongInfoTest() {
         List<Song> songs = getAllSongs();
 
@@ -219,6 +221,7 @@ public class SongInformationTests {
     }
 
     @Test
+    @Ignore
     public void songInformationPageTest() {
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -272,6 +275,7 @@ public class SongInformationTests {
     }
 
     @Test
+    @Ignore
     public void mainActivityTest() {
         ViewInteraction appCompatImageButton = onView(
                 allOf(withContentDescription("Navigate up"),
