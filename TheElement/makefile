@@ -1,11 +1,21 @@
 ### MAIN VARIABLES
 GW=./gradlew
-ABC=../../scripts/abc.sh
-ABC_CFG=../../scripts/.abc-config
+ABC=../../../scripts/abc.sh
+ABC_CFG=../../../scripts/.abc-config
 # -Dabc.make.android.lifecycle.events.explicit
 # -Dabc.instrument.array.operations
 # -Dabc.instrument.debug -Dabc.instrument.multithreaded"
-JAVA_OPTS=" -Dabc.instrument.array.operations -Dabc.instrument.fields.operations -Dabc.taint.android.intents -Dabc.instrument.include=fifthelement.theelement"
+JAVA_OPTS=" -Dabc.instrument.array.operations \
+-Dabc.instrument.fields.operations \
+-Dabc.taint.android.intents \
+-Dabc.instrument.include=fifthelement.theelement"
+
+# Skip instrumenting and calling this methods
+INSTRUMENTATION_OPTS=" \
+--skip-package=fifthelement.theelement.persistence.hsqldb \
+--skip-class=fifthelement.theelement.R \
+--filter-package=java.io \
+--filter-class=java.lang.StringBuilder"
 
 # Default
 SED=/usr/bin/sed
@@ -178,8 +188,9 @@ app-original.apk :
 app-instrumented.apk : app-original.apk
 	@export ABC_CONFIG=$(ABC_CFG) && \
 	export JAVA_OPTS=$(JAVA_OPTS) && \
-	$(ABC) instrument-apk app-original.apk && \
-	mv -v ../../code/ABC/instrumentation/instrumented-apks/app-original.apk app-instrumented.apk
+	export INSTRUMENTATION_OPTS=$(INSTRUMENTATION_OPTS) && \
+	INSTRUMENTED_APK=`$(ABC) instrument-apk app-original.apk` && \
+	mv -v $${INSTRUMENTED_APK} app-instrumented.apk
 
 app-androidTest.apk :
 	@export ABC_CONFIG=$(ABC_CFG) && \
