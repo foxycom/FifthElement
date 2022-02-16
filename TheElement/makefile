@@ -17,6 +17,16 @@ INSTRUMENTATION_OPTS=" \
 --filter-package=java.io \
 --filter-class=java.lang.StringBuilder"
 
+CARVING_JAVA_OPTIONS=" \
+-Dorg.slf4j.simpleLogger.defaultLogLevel=info \
+"
+
+CARVING_OPTIONS=" \
+--filter-method com.prismaqf.callblocker.rules.FilterRule.makeRegex \
+--filter-method com.prismaqf.callblocker.rules.FilterRule.filterUnwanted \
+--filter-method java.util.UUID.randomUUID \
+"
+
 # Default
 SED=/usr/bin/sed
 UNAME := $(shell uname)
@@ -232,7 +242,10 @@ carve-all : .carved-all
 
 # This requires to have all the tests traced. Note we create the app/src/allCarvedTest folder !
 .carved-all : $(ESPRESSO_TESTS)
-	@export ABC_CONFIG=$(ABC_CFG) && $(ABC) carve-all app-original.apk traces app/src/allCarvedTest force-clean 2>&1 | tee carving.log
+	@export ABC_CONFIG=$(ABC_CFG) && \
+	export CARVING_OPTIONS=$(CARVING_OPTIONS) && \
+	export CARVING_JAVA_OPTIONS=$(CARVING_JAVA_OPTIONS) && \
+	$(ABC) carve-all app-original.apk traces app/src/allCarvedTest force-clean 2>&1 | tee carving.log
 	@export ABC_CONFIG=$(ABC_CFG) && $(ABC) stop-all-emulators
 # Make sure this file has the right timestamp - probably touch will work the same
 	@sleep 1; echo "" > .carved-all
