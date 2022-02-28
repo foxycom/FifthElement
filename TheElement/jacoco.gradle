@@ -31,19 +31,8 @@ task jacocoUnitTestCoverage(type: JacocoReport, dependsOn: ['testDebugUnitTest']
     def fileFilter = ['**/R.class', '**/BuildConfig.class', '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
     def coverageSourceDirs = ["${project.projectDir}/src/main/java"]
 
-    print "classDirectories" + getClassDirectories() + "\n"
-    print "sourceDirectories" + getSourceDirectories() + "\n"
-    print "executionData" + getExecutionData() + "\n"
-
     classDirectories = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    // getClassDirectories().setFrom(fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter))
     sourceDirectories = files(coverageSourceDirs)
-    // getSourceDirectories().setFrom(files(coverageSourceDirs))
-
-    // getExecutionData().setFrom(fileTree(
-    //         dir: "${buildDir}",
-    //         include: ['jacoco/testDebugUnitTest.exec']
-    // ))
     executionData = fileTree(
             dir: "${buildDir}",
             include: ['jacoco/testDebugUnitTest.exec']
@@ -64,11 +53,11 @@ task jacocoGUITestCoverage(type: JacocoReport, dependsOn: ['connectedAndroidTest
     }
     def fileFilter = ['**/R.class', '**/BuildConfig.class', '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
     def coverageSourceDirs = ["${project.projectDir}/src/main/java"]
-    getClassDirectories().setFrom(fileTree(dir: "${buildDir}/intermediates/javac/debug/classes", excludes: fileFilter))
-    getSourceDirectories().setFrom(files(coverageSourceDirs))
 
-    getExecutionData().setFrom(fileTree(
+    classDirectories = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = fileTree(
             dir: "${buildDir}",
             include: ['outputs/code_coverage/debugAndroidTest/connected/*coverage.ec']
-    ))
+    )
 }
