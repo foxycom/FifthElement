@@ -19,9 +19,7 @@ CARVING_JAVA_OPTIONS=" \
 -Dorg.slf4j.simpleLogger.defaultLogLevel=info \
 "
 
-CARVING_OPTIONS=" \
-\
-"
+CARVING_OPTIONS=""
 
 SELECT_ONE_CARVING_OPTIONS=" \
 $(CARVING_OPTIONS) \
@@ -135,7 +133,7 @@ fi)
 $(eval COVERAGE_APKS_INSTALLED := 1)
 endef
 
-.PHONY: clean-gradle clean-all carve-all run-espresso-tests trace-espresso-tests
+.PHONY: clean-gradle clean-all carve-all-select-one carve-all-selected-all run-espresso-tests trace-espresso-tests
 
 show :
 	$(info $(ADB))
