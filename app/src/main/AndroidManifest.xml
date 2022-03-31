@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="fifthelement.theelement">
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_theelement_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_theelement_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!--
+             This used to be AppTheme for styles.xml, but had to add NoActionBar since its replaced
+             by Toolbar.
+             We need to re-use AppTheme for global styles
+        -->
+        <activity android:name=".presentation.activities.MainActivity" android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".presentation.activities.AddMusicActivity"/>
+
+        <service android:name=".presentation.services.MusicService" />
+        <service android:name=".presentation.services.NotificationService"
+            android:stopWithTask="true"/>
+    </application>
+
+</manifest>

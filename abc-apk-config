@@ -1,0 +1,15 @@
+[MakeConfiguration]
+make_app_package = fifthelement.theelement
+make_app_debug_package = fifthelement.theelement
+make_original_apk_path = app/build/outputs/apk/debug/app-debug.apk
+make_android_test_apk_path = app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+make_assemble_apk_command = assembleDebug
+make_assemble_android_test_command = assembleAndroidTest
+make_test_runner = fifthelement.theelement.test/android.support.test.runner.AndroidJUnitRunner
+make_ui_coverage_path = app/build/outputs/code_coverage/flossOsmDebugAndroidTest/connected/*coverage.ec
+make_permissions =
+make_instr_skip_classes = fifthelement.theelement.R
+make_instr_filter_packages = java.io, java.sql
+make_instr_filter_classes = java.lang.StringBuilder, java.lang.Object
+make_carving_filter_methods =
+make_trace_multiple_threads = true
